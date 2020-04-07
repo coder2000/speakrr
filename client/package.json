@@ -4,7 +4,7 @@
   "description": "Speakrr React client",
   "scripts": {
     "start": "webpack-dev-server --open --config webpack.dev.ts",
-    "build": "webpack --mode production --config webpack.prod.ts",
+    "build": "cross-env TS_NODE_PROEJCT=\"tsconfig.webpack.json\" webpack --mode production --config webpack.prod.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Dieter (coder2000) Lunn",
@@ -21,11 +21,14 @@
     "@types/webpack": "^4.41.10",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.1.0",
+    "cross-env": "^7.0.2",
     "css-loader": "^3.5.1",
     "html-webpack-plugin": "^4.0.4",
     "path": "^0.12.7",
     "style-loader": "^1.1.3",
+    "ts-loader": "^6.2.2",
     "ts-node": "^8.8.2",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.8.3",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",

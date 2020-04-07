@@ -1,3 +1,4 @@
+import * as path from "path";
 import * as webpack from "webpack";
 
 const config: webpack.Configuration = {
@@ -14,7 +15,7 @@ const config: webpack.Configuration = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        loader: "awesome-typescript-loader",
+        loader: "ts-loader",
       },
       {
         test: /\.css$/,
@@ -23,6 +24,10 @@ const config: webpack.Configuration = {
     ],
   },
   resolve: { extensions: ["*", ".js", ".jsx", ".ts", ".tsx"] },
+  output: {
+    path: path.resolve(__dirname, "../dist/client"),
+    filename: "bundle.js",
+  },
 };
 
 export default config;
