@@ -1,8 +1,13 @@
 {
   "name": "speakrr",
   "version": "0.0.1",
-  "description": "",
+  "description": "Speakrr is a podcast management system.",
   "author": "Dieter (coder2000) Lunn",
+  "homepage": "https://github.com/coder2000/speakrr#readme",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:coder2000/speakrr.git"
+  },
   "private": true,
   "license": "Apache-2.0",
   "scripts": {
