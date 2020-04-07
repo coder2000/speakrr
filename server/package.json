@@ -11,7 +11,7 @@
   "private": true,
   "license": "Apache-2.0",
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf ../dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
