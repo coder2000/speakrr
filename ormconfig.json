@@ -1,7 +1,7 @@
 {
   "type": "sqlite",
   "database": "database.sqlite",
-  "synchronize": true,
+  "synchronize": false,
   "logging": false,
   "entities": ["src/db/entities/**/*.ts"],
   "migrations": ["src/db/migrations/**/*.ts"],
