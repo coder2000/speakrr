@@ -12,4 +12,12 @@ export class PodcastService {
   findAll(): Promise<Podcast[]> {
     return this.podcastRepository.find();
   }
+
+  findById(id: number): Promise<Podcast> {
+    return this.podcastRepository.findOne(id);
+  }
+
+  addByUrl(podcastUrl: string): Promise<Podcast> {
+    return null;
+  }
 }
