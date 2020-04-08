@@ -1,0 +1,8 @@
+{
+  "name": "speakrr",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {}
+}
