@@ -1,5 +1,11 @@
 import * as path from "path";
 import * as webpack from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+
+const htmlPlugin = new HtmlWebpackPlugin({
+  template: "./src/index.html",
+  filename: "./index.html",
+});
 
 const config: webpack.Configuration = {
   entry: "./src/index.tsx",
@@ -28,6 +34,7 @@ const config: webpack.Configuration = {
     path: path.resolve(__dirname, "../dist/client"),
     filename: "bundle.js",
   },
+  plugins: [htmlPlugin],
 };
 
 export default config;

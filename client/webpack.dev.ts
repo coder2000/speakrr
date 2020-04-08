@@ -1,4 +1,9 @@
 import * as webpack from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+
+const htmlPlugin = new HtmlWebpackPlugin({
+  template: "./src/index.html",
+});
 
 const config: webpack.Configuration = {
   entry: "./src/index.tsx",
@@ -23,7 +28,7 @@ const config: webpack.Configuration = {
     ],
   },
   resolve: { extensions: ["*", ".js", ".jsx", ".ts", ".tsx"] },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [new webpack.HotModuleReplacementPlugin(), htmlPlugin],
 };
 
 export default config;
