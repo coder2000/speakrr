@@ -31,7 +31,7 @@ const config: webpack.Configuration = {
   },
   resolve: { extensions: ["*", ".js", ".jsx", ".ts", ".tsx"] },
   output: {
-    path: path.resolve(__dirname, "../dist/client"),
+    path: path.resolve(__dirname, "..", "server", "dist", "client"),
     filename: "bundle.js",
   },
   plugins: [htmlPlugin],

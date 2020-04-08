@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "../dist/client",
+    "outDir": "../server/dist/client",
     "sourceMap": true,
     "strict": true,
     "noImplicitReturns": true,

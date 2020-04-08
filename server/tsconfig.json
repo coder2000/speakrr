@@ -7,9 +7,10 @@
     "experimentalDecorators": true,
     "target": "es2017",
     "sourceMap": true,
-    "outDir": "../dist",
+    "outDir": "./dist",
     "baseUrl": "./src",
     "incremental": true,
+    "esModuleInterop": true,
     "paths": {
       "@entities/*": ["db/entities/*"],
       "@modules/*": ["modules/*"]
