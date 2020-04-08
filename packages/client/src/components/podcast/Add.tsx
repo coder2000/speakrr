@@ -5,7 +5,7 @@ import { gql } from 'apollo-boost';
 
 const ADD_PODCAST = gql`
   mutation addPodcast($podcast: PodcastInput!) {
-    addPodcast(podcast: $podcast) {
+    addPodcast(podcastData: $podcast) {
       id
     }
   }
@@ -29,6 +29,10 @@ export function Add() {
     { podcast: PodcastInput }
   >(ADD_PODCAST, { variables: { podcast: { podcastUrl: url! } } });
 
+  const onFinish = () => {
+    savePodcast();
+  };
+
   return (
     <>
       <PageHeader title="Speakrr" subTitle="Add Podcast" />
@@ -37,7 +41,7 @@ export function Add() {
           <Title>Add Podcast</Title>
         </Col>
       </Row>
-      <Form>
+      <Form onFinish={onFinish}>
         <Form.Item
           wrapperCol={{ span: 12, offset: 4 }}
           rules={[{ required: true }]}
