@@ -6,6 +6,7 @@ import path from 'path';
   imports: [
     ServeStaticModule.forRoot({
       rootPath: path.resolve(__dirname, '..', '..', 'client'),
+      exclude: ['/graphql*'],
     }),
   ],
 })
