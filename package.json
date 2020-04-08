@@ -4,5 +4,9 @@
   "workspaces": [
     "packages/*"
   ],
-  "scripts": {}
+  "scripts": {},
+  "nohoist": [
+    "**/typeorm/**",
+    "**/typeorm"
+  ]
 }
