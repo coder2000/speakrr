@@ -15,8 +15,15 @@ export class PodcastResolver {
     return this.podcastService.findById(podcastId);
   }
 
+  @Query((returns) => [Podcast])
+  async getPodcasts(): Promise<Podcast[]> {
+    return this.podcastService.findAll();
+  }
+
   @Mutation((returns) => Queue)
-  async addPodcast(@Args('podcastData') podcastData: PodcastInput) {
+  async addPodcast(
+    @Args('podcastData') podcastData: PodcastInput,
+  ): Promise<Queue> {
     return this.podcastService.addByUrl(podcastData.podcastUrl);
   }
 }

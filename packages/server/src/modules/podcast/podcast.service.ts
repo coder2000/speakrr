@@ -1,11 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cron } from '@nestjs/schedule';
 import { Repository } from 'typeorm';
 import Parser from 'rss-parser';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { Logger } from 'winston';
 import { Podcast } from '@entities/podcast.entity';
 import { Queue } from '@entities/queue.entity';
-import { SpeakrrLogger } from '@modules/logger';
 
 @Injectable()
 export class PodcastService {
@@ -14,9 +15,8 @@ export class PodcastService {
   constructor(
     @InjectRepository(Podcast) private podcastRepository: Repository<Podcast>,
     @InjectRepository(Queue) private queueRepository: Repository<Queue>,
-    private readonly logger: SpeakrrLogger,
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {
-    this.logger.setContext('PodcastService');
     this.rss = new Parser({
       customFields: {
         feed: ['language'],
@@ -50,6 +50,11 @@ export class PodcastService {
       .createQueryBuilder('queue')
       .where('queue.completed = false')
       .getOne();
+
+    if (!next) {
+      this.logger.debug('No podcast queued.');
+      return;
+    }
 
     this.logger.debug('Parsing ' + next.url + ' ...');
 
