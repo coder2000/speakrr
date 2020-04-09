@@ -3,19 +3,17 @@ import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ScheduleModule } from '@nestjs/schedule';
 import { PodcastModule } from '@modules/podcast';
-
-import { Podcast } from '@entities/podcast.entity';
-import { Author } from '@entities/author.entity';
-import { Category } from '@entities/category.entity';
-import { Episode } from '@entities/episode.entity';
+import { AuthorModule } from '@modules/author';
+import { EpisodeModule } from '@modules/episode';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'database.sqlite',
-      entities: [Author, Category, Episode, Podcast],
+      autoLoadEntities: true,
       synchronize: false,
     }),
     ServeStaticModule.forRoot({
@@ -27,7 +25,10 @@ import { Episode } from '@entities/episode.entity';
       debug: false,
       playground: false,
     }),
+    ScheduleModule.forRoot(),
     PodcastModule,
+    AuthorModule,
+    EpisodeModule,
   ],
 })
 export class AppModule {}
