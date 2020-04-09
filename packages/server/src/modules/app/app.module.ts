@@ -7,6 +7,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { PodcastModule } from '@modules/podcast';
 import { AuthorModule } from '@modules/author';
 import { EpisodeModule } from '@modules/episode';
+import { CategoryModule } from '@modules/category';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { EpisodeModule } from '@modules/episode';
     PodcastModule,
     AuthorModule,
     EpisodeModule,
+    CategoryModule,
   ],
 })
 export class AppModule {}
