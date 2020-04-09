@@ -1,8 +1,10 @@
-import { HttpService, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Cron } from '@nestjs/schedule';
 import { Repository } from 'typeorm';
 import Parser from 'rss-parser';
 import { Podcast } from '@entities/podcast.entity';
+import { Queue } from '@entities/queue.entity';
 import { SpeakrrLogger } from '@modules/logger';
 
 @Injectable()
@@ -11,7 +13,7 @@ export class PodcastService {
 
   constructor(
     @InjectRepository(Podcast) private podcastRepository: Repository<Podcast>,
-    private readonly httpService: HttpService,
+    @InjectRepository(Queue) private queueRepository: Repository<Queue>,
     private readonly logger: SpeakrrLogger,
   ) {
     this.logger.setContext('PodcastService');
@@ -30,10 +32,28 @@ export class PodcastService {
     return this.podcastRepository.findOne(id);
   }
 
-  async addByUrl(podcastUrl: string): Promise<Podcast> {
+  async addByUrl(podcastUrl: string): Promise<Queue> {
     this.logger.debug('Received url: ' + podcastUrl);
-    var data = await this.rss.parseURL(podcastUrl);
-    var podcast = this.podcastRepository.create();
+    var queue = new Queue();
+
+    queue.url = podcastUrl;
+
+    this.queueRepository.save(queue);
+
+    return queue;
+  }
+
+  @Cron('* 5 * * *')
+  async parseFromQueue() {
+    this.logger.debug('Starting parsing for next podcast.');
+    var next = await this.queueRepository
+      .createQueryBuilder('queue')
+      .where('completed = false')
+      .getOne();
+
+    this.logger.debug('Parsing ' + next.url + ' ...');
+    var data = await this.rss.parseURL(next.url);
+    var podcast = new Podcast();
 
     podcast.title = data.title;
     podcast.image = data.image.url;
@@ -44,6 +64,8 @@ export class PodcastService {
 
     this.podcastRepository.save(podcast);
 
-    return podcast;
+    this.logger.debug('Completed parsing.');
+    next.completed = true;
+    this.queueRepository.save(next);
   }
 }
