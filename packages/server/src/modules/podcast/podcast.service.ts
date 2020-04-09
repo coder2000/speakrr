@@ -48,12 +48,21 @@ export class PodcastService {
     this.logger.debug('Starting parsing for next podcast.');
     var next = await this.queueRepository
       .createQueryBuilder('queue')
-      .where('completed = false')
+      .where('queue.completed = false')
       .getOne();
 
     this.logger.debug('Parsing ' + next.url + ' ...');
+
+    var podcast = await this.podcastRepository
+      .createQueryBuilder('podcast')
+      .where('podcast.link = :url', { url: next.url })
+      .getOne();
+
+    if (!podcast) {
+      podcast = new Podcast();
+    }
+
     var data = await this.rss.parseURL(next.url);
-    var podcast = new Podcast();
 
     podcast.title = data.title;
     podcast.image = data.image.url;
