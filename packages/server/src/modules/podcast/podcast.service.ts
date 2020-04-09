@@ -37,6 +37,7 @@ export class PodcastService {
     var queue = new Queue();
 
     queue.url = podcastUrl;
+    queue.completed = false;
 
     this.queueRepository.save(queue);
 
