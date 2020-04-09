@@ -43,7 +43,7 @@ export class PodcastService {
     return queue;
   }
 
-  @Cron('* 5 * * *')
+  @Cron('*/5 * * * *')
   async parseFromQueue() {
     this.logger.debug('Starting parsing for next podcast.');
     var next = await this.queueRepository
