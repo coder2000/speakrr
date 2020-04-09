@@ -44,13 +44,13 @@ export class Podcast {
 
   @ManyToOne((type) => Author, (author) => author.podcasts)
   @Field((type) => Author)
-  author: Author;
+  author?: Author;
 
   @OneToMany((type) => Episode, (episode) => episode.podcast)
   @Field((type) => [Episode])
-  episodes: Episode[];
+  episodes?: Episode[];
 
   @ManyToMany((type) => Category, (category) => category.podcasts)
   @Field((type) => [Category])
-  categories: Category[];
+  categories?: Category[];
 }
