@@ -1,22 +1,27 @@
-import { Inject, Injectable } from '@nestjs/common';
+import Bunyan from 'bunyan';
+import Parser from 'rss-parser';
+
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cron } from '@nestjs/schedule';
 import { Repository } from 'typeorm';
-import Parser from 'rss-parser';
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-import { Logger } from 'winston';
+import { Logger } from '@eropple/nestjs-bunyan';
+
 import { Podcast } from '@entities/podcast.entity';
 import { Queue } from '@entities/queue.entity';
 
 @Injectable()
 export class PodcastService {
-  private rss: Parser;
+  private readonly rss: Parser;
+  private readonly _logger: Bunyan;
 
   constructor(
     @InjectRepository(Podcast) private podcastRepository: Repository<Podcast>,
     @InjectRepository(Queue) private queueRepository: Repository<Queue>,
-    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+    @Logger() logger: Bunyan,
   ) {
+    this._logger = logger.child({ component: this.constructor.name });
+
     this.rss = new Parser({
       customFields: {
         feed: ['language'],
@@ -33,7 +38,7 @@ export class PodcastService {
   }
 
   async addByUrl(podcastUrl: string): Promise<Queue> {
-    this.logger.debug('Received url: ' + podcastUrl);
+    this._logger.info('Received url: ' + podcastUrl);
     var queue = new Queue();
 
     queue.url = podcastUrl;
@@ -46,18 +51,18 @@ export class PodcastService {
 
   @Cron('*/5 * * * *')
   async parseFromQueue() {
-    this.logger.debug('Starting parsing for next podcast.');
+    this._logger.info('Starting parsing for next podcast.');
     var next = await this.queueRepository
       .createQueryBuilder('queue')
       .where('queue.completed = false')
       .getOne();
 
     if (!next) {
-      this.logger.debug('No podcast queued.');
+      this._logger.info('No podcast queued.');
       return;
     }
 
-    this.logger.debug('Parsing ' + next.url + ' ...');
+    this._logger.info('Parsing ' + next.url + ' ...');
 
     var podcast = await this.podcastRepository
       .createQueryBuilder('podcast')
@@ -79,7 +84,7 @@ export class PodcastService {
 
     this.podcastRepository.save(podcast);
 
-    this.logger.debug('Completed parsing.');
+    this._logger.info('Completed parsing.');
     next.completed = true;
     this.queueRepository.save(next);
   }

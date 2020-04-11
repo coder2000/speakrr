@@ -28,6 +28,7 @@
     "migration:run": "ts-node node_modules/.bin/typeorm migration:run"
   },
   "dependencies": {
+    "@eropple/nestjs-bunyan": "^0.5.7",
     "@nestjs/common": "^7.0.7",
     "@nestjs/core": "^7.0.7",
     "@nestjs/graphql": "^7.2.1",
@@ -51,9 +52,9 @@
     "@nestjs/cli": "^7.1.2",
     "@nestjs/schematics": "^7.0.0",
     "@nestjs/testing": "^7.0.7",
-    "@types/express": "^4.17.5",
+    "@types/express": "^4.17.6",
     "@types/jest": "25.2.1",
-    "@types/node": "^13.11.0",
+    "@types/node": "^13.11.1",
     "@types/supertest": "^2.0.8",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",

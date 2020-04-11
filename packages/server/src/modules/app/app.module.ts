@@ -1,12 +1,13 @@
 import path from 'path';
-import winston from 'winston';
+
 import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
-import { WinstonModule } from 'nest-winston';
+import { LoggingModule } from '@eropple/nestjs-bunyan';
 
+import { ROOT_LOGGER } from '../../logger';
 import { PodcastModule } from '@modules/podcast';
 import { AuthorModule } from '@modules/author';
 import { EpisodeModule } from '@modules/episode';
@@ -30,12 +31,7 @@ import { CategoryModule } from '@modules/category';
       playground: false,
     }),
     ScheduleModule.forRoot(),
-    WinstonModule.forRoot({
-      transports: [
-        new winston.transports.Console(),
-        new winston.transports.File({ filename: 'speakrr.log' }),
-      ],
-    }),
+    LoggingModule.forRoot(ROOT_LOGGER),
     PodcastModule,
     AuthorModule,
     EpisodeModule,

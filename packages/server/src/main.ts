@@ -1,22 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '@modules/app';
-import { utilities as WinstonUtilities, WinstonModule } from 'nest-winston';
-import winston from 'winston';
+import { BunyanLoggerService } from '@eropple/nestjs-bunyan';
+import { ROOT_LOGGER } from './logger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    logger: WinstonModule.createLogger({
-      level: 'verbose',
-      format: winston.format.combine(
-        winston.format.timestamp(),
-        WinstonUtilities.format.nestLike(),
-      ),
-      transports: [
-        new winston.transports.Console(),
-        new winston.transports.File({ filename: 'speakrr.log' }),
-      ],
-    }),
+    logger: new BunyanLoggerService(ROOT_LOGGER),
   });
   await app.listen(3000);
 }
+
 bootstrap();
