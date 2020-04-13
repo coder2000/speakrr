@@ -1,11 +1,12 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { FilterableField } from '@nestjs-query/query-graphql';
 import { Field, ObjectType } from '@nestjs/graphql';
 
 @Entity()
 @ObjectType()
 export class Queue {
   @PrimaryGeneratedColumn()
-  @Field()
+  @FilterableField()
   id: number;
 
   @Column()
@@ -13,6 +14,6 @@ export class Queue {
   url: string;
 
   @Column({ nullable: true })
-  @Field()
+  @FilterableField({ nullable: true })
   completed?: boolean;
 }

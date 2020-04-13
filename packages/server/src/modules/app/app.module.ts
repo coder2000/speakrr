@@ -10,6 +10,7 @@ import { PodcastModule } from '@modules/podcast';
 import { AuthorModule } from '@modules/author';
 import { EpisodeModule } from '@modules/episode';
 import { CategoryModule } from '@modules/category';
+import { QueueModule } from '@modules/queue';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { CategoryModule } from '@modules/category';
     AuthorModule,
     EpisodeModule,
     CategoryModule,
+    QueueModule,
   ],
 })
 export class AppModule {}
