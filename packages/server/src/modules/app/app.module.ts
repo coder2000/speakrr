@@ -5,9 +5,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
-import { LoggingModule } from '@eropple/nestjs-bunyan';
 
-import { ROOT_LOGGER } from '../../logger';
 import { PodcastModule } from '@modules/podcast';
 import { AuthorModule } from '@modules/author';
 import { EpisodeModule } from '@modules/episode';
@@ -31,7 +29,6 @@ import { CategoryModule } from '@modules/category';
       playground: false,
     }),
     ScheduleModule.forRoot(),
-    LoggingModule.forRoot(ROOT_LOGGER),
     PodcastModule,
     AuthorModule,
     EpisodeModule,

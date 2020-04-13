@@ -1,11 +1,10 @@
-import Bunyan from 'bunyan';
 import Parser from 'rss-parser';
 
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cron } from '@nestjs/schedule';
+import { PinoLogger } from 'nestjs-pino';
 import { Repository } from 'typeorm';
-import { Logger } from '@eropple/nestjs-bunyan';
 
 import { Podcast } from '@entities/podcast.entity';
 import { Queue } from '@entities/queue.entity';
@@ -13,15 +12,13 @@ import { Queue } from '@entities/queue.entity';
 @Injectable()
 export class PodcastService {
   private readonly rss: Parser;
-  private readonly _logger: Bunyan;
 
   constructor(
     @InjectRepository(Podcast) private podcastRepository: Repository<Podcast>,
     @InjectRepository(Queue) private queueRepository: Repository<Queue>,
-    @Logger() logger: Bunyan,
+    private readonly logger: PinoLogger,
   ) {
-    this._logger = logger.child({ component: this.constructor.name });
-
+    this.logger.setContext(PodcastService.name);
     this.rss = new Parser({
       customFields: {
         feed: ['language'],
@@ -38,7 +35,7 @@ export class PodcastService {
   }
 
   async addByUrl(podcastUrl: string): Promise<Queue> {
-    this._logger.info('Received url: ' + podcastUrl);
+    this.logger.info('Received url: ' + podcastUrl);
     var queue = new Queue();
 
     queue.url = podcastUrl;
@@ -51,18 +48,18 @@ export class PodcastService {
 
   @Cron('*/5 * * * *')
   async parseFromQueue() {
-    this._logger.info('Starting parsing for next podcast.');
+    this.logger.info('Starting parsing for next podcast.');
     var next = await this.queueRepository
       .createQueryBuilder('queue')
       .where('queue.completed = false')
       .getOne();
 
     if (!next) {
-      this._logger.info('No podcast queued.');
+      this.logger.info('No podcast queued.');
       return;
     }
 
-    this._logger.info('Parsing ' + next.url + ' ...');
+    this.logger.info('Parsing ' + next.url + ' ...');
 
     var podcast = await this.podcastRepository
       .createQueryBuilder('podcast')
@@ -84,7 +81,7 @@ export class PodcastService {
 
     this.podcastRepository.save(podcast);
 
-    this._logger.info('Completed parsing.');
+    this.logger.info('Completed parsing.');
     next.completed = true;
     this.queueRepository.save(next);
   }

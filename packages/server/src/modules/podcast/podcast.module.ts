@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
+import { LoggerModule } from 'nestjs-pino';
+
 import { PodcastService } from './podcast.service';
 import { PodcastResolver } from './podcast.resolver';
 import { Podcast } from '@entities/podcast.entity';
-import { Queue } from '@entities/queue.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Podcast, Queue])],
-  providers: [PodcastService, PodcastResolver],
+  imports: [
+    NestjsQueryTypeOrmModule.forFeature([Podcast]),
+    LoggerModule.forRoot(),
+  ],
+  providers: [PodcastResolver],
 })
 export class PodcastModule {}

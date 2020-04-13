@@ -1,12 +1,15 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import { Field, ObjectType } from '@nestjs/graphql';
+import { FilterableField } from '@nestjs-query/query-graphql';
+import { Field, ObjectType, GraphQLISODateTime } from '@nestjs/graphql';
 import { Author } from './author.entity';
 import { Episode } from './episode.entity';
 import { Category } from './category.entity';
@@ -15,11 +18,11 @@ import { Category } from './category.entity';
 @ObjectType()
 export class Podcast {
   @PrimaryGeneratedColumn()
-  @Field()
+  @FilterableField()
   id: number;
 
   @Column()
-  @Field()
+  @FilterableField()
   title: string;
 
   @Column()
@@ -42,15 +45,23 @@ export class Podcast {
   @Field()
   explicit: boolean;
 
-  @ManyToOne((type) => Author, (author) => author.podcasts)
-  @Field((type) => Author)
-  author?: Author;
+  @ManyToOne(() => Author, (author) => author.podcasts)
+  @Field(() => Author)
+  author: Author;
 
-  @OneToMany((type) => Episode, (episode) => episode.podcast)
-  @Field((type) => [Episode])
-  episodes?: Episode[];
+  @OneToMany(() => Episode, (episode) => episode.podcast)
+  @Field(() => [Episode])
+  episodes: Episode[];
 
-  @ManyToMany((type) => Category, (category) => category.podcasts)
-  @Field((type) => [Category])
-  categories?: Category[];
+  @ManyToMany(() => Category, (category) => category.podcasts)
+  @Field(() => [Category])
+  categories: Category[];
+
+  @CreateDateColumn()
+  @Field(() => GraphQLISODateTime)
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  @Field(() => GraphQLISODateTime)
+  updatedAt: Date;
 }
