@@ -4,12 +4,13 @@ import { QueryService } from '@nestjs-query/core';
 import { InjectTypeOrmQueryService } from '@nestjs-query/query-typeorm';
 
 import { Author } from '@entities/author.entity';
-import { Podcast } from '@entities/podcast.entity';
+import { AuthorDto } from '@dto/author.dto';
+import { PodcastDto } from '@dto/podcast.dto';
 
-@Resolver(() => Author)
-export class AuthorResolver extends CRUDResolver(Author, {
+@Resolver(() => AuthorDto)
+export class AuthorResolver extends CRUDResolver(AuthorDto, {
   create: { disabled: true },
-  relations: { many: { podcasts: { DTO: Podcast } } },
+  relations: { many: { podcasts: { DTO: PodcastDto } } },
 }) {
   constructor(
     @InjectTypeOrmQueryService(Author) authorService: QueryService<Author>,

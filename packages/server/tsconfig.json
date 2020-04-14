@@ -12,6 +12,7 @@
     "incremental": true,
     "esModuleInterop": true,
     "paths": {
+      "@dto/*": ["db/dto/*"],
       "@entities/*": ["db/entities/*"],
       "@modules/*": ["modules/*"]
     }

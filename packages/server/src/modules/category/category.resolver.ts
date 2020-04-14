@@ -4,12 +4,13 @@ import { QueryService } from '@nestjs-query/core';
 import { InjectTypeOrmQueryService } from '@nestjs-query/query-typeorm';
 
 import { Category } from '@entities/category.entity';
-import { Podcast } from '@entities/podcast.entity';
+import { PodcastDto } from '@dto/podcast.dto';
+import { CategoryDto } from '@dto/category.dto';
 
-@Resolver(() => Category)
-export class CategoryResolver extends CRUDResolver(Category, {
+@Resolver()
+export class CategoryResolver extends CRUDResolver(CategoryDto, {
   create: { disabled: true },
-  relations: { many: { podcasts: { DTO: Podcast } } },
+  relations: { many: { podcasts: { DTO: PodcastDto, disableUpdate: true } } },
 }) {
   constructor(
     @InjectTypeOrmQueryService(Category)

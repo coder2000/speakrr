@@ -1,24 +1,30 @@
-import { Resolver, ResolveField, Parent } from '@nestjs/graphql';
+import { Resolver } from '@nestjs/graphql';
 import { CRUDResolver } from '@nestjs-query/query-graphql';
 import { QueryService } from '@nestjs-query/core';
 import { InjectTypeOrmQueryService } from '@nestjs-query/query-typeorm';
 
 import { Podcast } from '@entities/podcast.entity';
-import { Episode } from '@entities/episode.entity';
-import { Author } from '@entities/author.entity';
-import { Category } from '@entities/category.entity';
+import { PodcastDto } from '@dto/podcast.dto';
+import { AuthorDto } from '@dto/author.dto';
+import { EpisodeDto } from '@dto/episode.dto';
+import { CategoryDto } from '@dto/category.dto';
 
-@Resolver(() => Podcast)
-export class PodcastResolver extends CRUDResolver(Podcast, {
+@Resolver(() => PodcastDto)
+export class PodcastResolver extends CRUDResolver(PodcastDto, {
   create: { disabled: true },
   relations: {
-    many: { episodes: { DTO: Episode }, categories: { DTO: Category } },
-    one: { author: { DTO: Author } },
+    many: {
+      episodes: { DTO: EpisodeDto, disableUpdate: true },
+      categories: { DTO: CategoryDto, disableUpdate: true },
+    },
+    one: {
+      author: { DTO: AuthorDto, disableUpdate: true, disableRemove: true },
+    },
   },
 }) {
   constructor(
     @InjectTypeOrmQueryService(Podcast)
-    podcastService: QueryService<Podcast>,
+    podcastService: QueryService<PodcastDto>,
   ) {
     super(podcastService);
   }
