@@ -1,8 +1,9 @@
-import { Resolver } from '@nestjs/graphql';
+import { Resolver, ResolveField, Parent } from '@nestjs/graphql';
 import { CRUDResolver } from '@nestjs-query/query-graphql';
 import { QueryService } from '@nestjs-query/core';
 import { InjectTypeOrmQueryService } from '@nestjs-query/query-typeorm';
 
+import { AuthorService } from '@modules/author';
 import { Podcast } from '@entities/podcast.entity';
 import { Episode } from '@entities/episode.entity';
 import { Author } from '@entities/author.entity';
@@ -18,8 +19,14 @@ export class PodcastResolver extends CRUDResolver(Podcast, {
 }) {
   constructor(
     @InjectTypeOrmQueryService(Podcast)
-    private readonly podcastService: QueryService<Podcast>,
+    podcastService: QueryService<Podcast>,
+    private readonly authorService: AuthorService,
   ) {
     super(podcastService);
+  }
+
+  @ResolveField()
+  async author(@Parent() podcast: Podcast): Promise<Author> {
+    return this.authorService.getById(podcast.author.id);
   }
 }

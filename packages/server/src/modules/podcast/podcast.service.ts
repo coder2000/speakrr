@@ -31,6 +31,13 @@ export class PodcastService extends TypeOrmQueryService<Podcast> {
     });
   }
 
+  async findByAuthorId(id: number): Promise<Podcast[]> {
+    return this.podcastRepository
+      .createQueryBuilder('podcast')
+      .where('authorId = :id', { id: id })
+      .getMany();
+  }
+
   @Cron('*/5 * * * *')
   async parseFromQueue() {
     this.logger.info('Starting parsing for next podcast.');
