@@ -8,12 +8,12 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Author } from './author.entity';
-import { Episode } from './episode.entity';
-import { Category } from './category.entity';
+import { AuthorEntity } from './author.entity';
+import { EpisodeEntity } from './episode.entity';
+import { CategoryEntity } from './category.entity';
 
 @Entity()
-export class Podcast {
+export class PodcastEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -35,14 +35,14 @@ export class Podcast {
   @Column()
   explicit: boolean;
 
-  @ManyToOne(() => Author, (author) => author.podcasts)
-  author: Author;
+  @ManyToOne(() => AuthorEntity, (author) => author.podcasts)
+  author: AuthorEntity;
 
-  @OneToMany(() => Episode, (episode) => episode.podcast)
-  episodes: Episode[];
+  @OneToMany(() => EpisodeEntity, (episode) => episode.podcast)
+  episodes: EpisodeEntity[];
 
-  @ManyToMany(() => Category, (category) => category.podcasts)
-  categories: Category[];
+  @ManyToMany(() => CategoryEntity, (category) => category.podcasts)
+  categories: CategoryEntity[];
 
   @CreateDateColumn()
   createdAt: Date;

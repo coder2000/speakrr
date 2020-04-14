@@ -5,11 +5,11 @@ import { LoggerModule } from 'nestjs-pino';
 import { QueueModule } from '@modules/queue';
 import { PodcastService } from './podcast.service';
 import { PodcastResolver } from './podcast.resolver';
-import { Podcast } from '@entities/podcast.entity';
+import { PodcastEntity } from '@entities/podcast.entity';
 
 @Module({
   imports: [
-    NestjsQueryTypeOrmModule.forFeature([Podcast]),
+    NestjsQueryTypeOrmModule.forFeature([PodcastEntity]),
     LoggerModule.forRoot(),
     QueueModule,
   ],

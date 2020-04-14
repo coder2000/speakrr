@@ -3,18 +3,18 @@ import { CRUDResolver } from '@nestjs-query/query-graphql';
 import { QueryService } from '@nestjs-query/core';
 import { InjectTypeOrmQueryService } from '@nestjs-query/query-typeorm';
 
-import { Episode } from '@entities/episode.entity';
+import { EpisodeEntity } from '@entities/episode.entity';
 import { PodcastDto } from '@dto/podcast.dto';
 import { EpisodeDto } from '@dto/episode.dto';
 
-@Resolver(() => EpisodeDto)
+@Resolver()
 export class EpisodeResolver extends CRUDResolver(EpisodeDto, {
   create: { disabled: true },
   relations: { one: { podcast: { DTO: PodcastDto } } },
 }) {
   constructor(
-    @InjectTypeOrmQueryService(Episode)
-    episodeService: QueryService<EpisodeDto>,
+    @InjectTypeOrmQueryService(EpisodeEntity)
+    episodeService: QueryService<EpisodeEntity>,
   ) {
     super(episodeService);
   }

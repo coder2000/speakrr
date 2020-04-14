@@ -8,16 +8,17 @@ import { TypeOrmQueryService } from '@nestjs-query/query-typeorm';
 import { PinoLogger } from 'nestjs-pino';
 import { Repository } from 'typeorm';
 
-import { Podcast } from '@entities/podcast.entity';
+import { PodcastEntity } from '@entities/podcast.entity';
 import { Queue } from '@entities/queue.entity';
 
 @Injectable()
-@QueryService(Podcast)
-export class PodcastService extends TypeOrmQueryService<Podcast> {
+@QueryService(PodcastEntity)
+export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
   private readonly rss: Parser;
 
   constructor(
-    @InjectRepository(Podcast) private podcastRepository: Repository<Podcast>,
+    @InjectRepository(PodcastEntity)
+    private podcastRepository: Repository<PodcastEntity>,
     @InjectRepository(Queue) private queueRepository: Repository<Queue>,
     private readonly logger: PinoLogger,
   ) {
@@ -31,11 +32,11 @@ export class PodcastService extends TypeOrmQueryService<Podcast> {
     });
   }
 
-  async findByAuthorId(authorId: number): Promise<Podcast[]> {
+  async findByAuthorId(authorId: number): Promise<PodcastEntity[]> {
     return this.podcastRepository.find({ where: { authorId: authorId } });
   }
 
-  async findByCategoryId(categoryId: number): Promise<Podcast[]> {
+  async findByCategoryId(categoryId: number): Promise<PodcastEntity[]> {
     return;
   }
 
@@ -60,7 +61,7 @@ export class PodcastService extends TypeOrmQueryService<Podcast> {
       .getOne();
 
     if (!podcast) {
-      podcast = new Podcast();
+      podcast = new PodcastEntity();
     }
 
     var data = await this.rss.parseURL(next.url);
