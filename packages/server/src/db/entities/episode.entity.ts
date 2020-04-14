@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Podcast } from './podcast.entity';
+import { PodcastEntity } from './podcast.entity';
 
 @Entity()
 export class EpisodeEntity {
@@ -36,6 +36,6 @@ export class EpisodeEntity {
   @Column()
   publication: Date;
 
-  @ManyToOne(() => Podcast, (podcast) => podcast.episodes)
-  podcast: Podcast;
+  @ManyToOne(() => PodcastEntity, (podcast) => podcast.episodes)
+  podcast: PodcastEntity;
 }

@@ -1,6 +1,5 @@
 import Parser from 'rss-parser';
 
-import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cron } from '@nestjs/schedule';
 import { QueryService } from '@nestjs-query/core';
@@ -11,7 +10,6 @@ import { Repository } from 'typeorm';
 import { PodcastEntity } from '@entities/podcast.entity';
 import { Queue } from '@entities/queue.entity';
 
-@Injectable()
 @QueryService(PodcastEntity)
 export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
   private readonly rss: Parser;
