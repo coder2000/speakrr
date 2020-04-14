@@ -8,6 +8,7 @@ import { Podcast } from '@entities/podcast.entity';
 import { Episode } from '@entities/episode.entity';
 import { Author } from '@entities/author.entity';
 import { Category } from '@entities/category.entity';
+import { Inject, forwardRef } from '@nestjs/common';
 
 @Resolver(() => Podcast)
 export class PodcastResolver extends CRUDResolver(Podcast, {
@@ -20,6 +21,7 @@ export class PodcastResolver extends CRUDResolver(Podcast, {
   constructor(
     @InjectTypeOrmQueryService(Podcast)
     podcastService: QueryService<Podcast>,
+    @Inject(forwardRef(() => AuthorService))
     private readonly authorService: AuthorService,
   ) {
     super(podcastService);

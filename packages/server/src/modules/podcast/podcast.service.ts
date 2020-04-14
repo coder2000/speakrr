@@ -31,11 +31,12 @@ export class PodcastService extends TypeOrmQueryService<Podcast> {
     });
   }
 
-  async findByAuthorId(id: number): Promise<Podcast[]> {
-    return this.podcastRepository
-      .createQueryBuilder('podcast')
-      .where('authorId = :id', { id: id })
-      .getMany();
+  async findByAuthorId(authorId: number): Promise<Podcast[]> {
+    return this.podcastRepository.find({ where: { authorId: authorId } });
+  }
+
+  async findByCategoryId(categoryId: number): Promise<Podcast[]> {
+    return;
   }
 
   @Cron('*/5 * * * *')
