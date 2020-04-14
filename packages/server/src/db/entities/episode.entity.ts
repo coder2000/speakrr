@@ -50,7 +50,7 @@ export class Episode {
   @Field()
   publication: Date;
 
-  @ManyToOne((type) => Podcast, (podcast) => podcast.episodes)
-  @Field((type) => Podcast)
+  @ManyToOne(() => Podcast, (podcast) => podcast.episodes)
+  @Field(() => Podcast)
   podcast: Podcast;
 }

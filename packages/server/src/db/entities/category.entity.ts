@@ -14,7 +14,7 @@ export class Category {
   @Field()
   name: string;
 
-  @ManyToMany((type) => Podcast, (podcast) => podcast.categories)
-  @Field((type) => [Podcast])
+  @ManyToMany(() => Podcast, (podcast) => podcast.categories)
+  @Field(() => [Podcast])
   podcasts: Podcast[];
 }

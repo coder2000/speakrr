@@ -14,7 +14,7 @@ export class Author {
   @Field()
   name: string;
 
-  @OneToMany((type) => Podcast, (podcast) => podcast.author)
-  @Field((type) => [Podcast])
+  @OneToMany(() => Podcast, (podcast) => podcast.author)
+  @Field(() => [Podcast])
   podcasts: Podcast[];
 }
