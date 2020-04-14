@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { Episode } from '@entities/episode.entity';
+import { EpisodeResolver } from './episode.resolver';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Episode])],
+  imports: [NestjsQueryTypeOrmModule.forFeature([Episode])],
+  providers: [EpisodeResolver],
 })
 export class EpisodeModule {}
