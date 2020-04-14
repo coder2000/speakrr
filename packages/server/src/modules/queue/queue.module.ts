@@ -6,5 +6,6 @@ import { QueueResolver } from './queue.resolver';
 @Module({
   imports: [NestjsQueryTypeOrmModule.forFeature([Queue])],
   providers: [QueueResolver],
+  exports: [NestjsQueryTypeOrmModule],
 })
 export class QueueModule {}

@@ -9,7 +9,7 @@ import { Podcast } from '@entities/podcast.entity';
 @Resolver(() => Episode)
 export class EpisodeResolver extends CRUDResolver(Episode, {
   create: { disabled: true },
-  relations: { many: { podcasts: { DTO: Podcast } } },
+  relations: { one: { podcast: { DTO: Podcast } } },
 }) {
   constructor(
     @InjectTypeOrmQueryService(Episode) episodeService: QueryService<Episode>,
