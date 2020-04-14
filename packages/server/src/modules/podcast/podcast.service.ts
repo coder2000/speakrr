@@ -3,6 +3,8 @@ import Parser from 'rss-parser';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cron } from '@nestjs/schedule';
+import { QueryService } from '@nestjs-query/core';
+import { TypeOrmQueryService } from '@nestjs-query/query-typeorm';
 import { PinoLogger } from 'nestjs-pino';
 import { Repository } from 'typeorm';
 
@@ -10,7 +12,8 @@ import { Podcast } from '@entities/podcast.entity';
 import { Queue } from '@entities/queue.entity';
 
 @Injectable()
-export class PodcastService {
+@QueryService(Podcast)
+export class PodcastService extends TypeOrmQueryService<Podcast> {
   private readonly rss: Parser;
 
   constructor(
@@ -18,32 +21,14 @@ export class PodcastService {
     @InjectRepository(Queue) private queueRepository: Repository<Queue>,
     private readonly logger: PinoLogger,
   ) {
+    super(podcastRepository);
+
     this.logger.setContext(PodcastService.name);
     this.rss = new Parser({
       customFields: {
         feed: ['language'],
       },
     });
-  }
-
-  findAll(): Promise<Podcast[]> {
-    return this.podcastRepository.find();
-  }
-
-  findById(id: number): Promise<Podcast> {
-    return this.podcastRepository.findOne(id);
-  }
-
-  async addByUrl(podcastUrl: string): Promise<Queue> {
-    this.logger.info('Received url: ' + podcastUrl);
-    var queue = new Queue();
-
-    queue.url = podcastUrl;
-    queue.completed = false;
-
-    this.queueRepository.save(queue);
-
-    return queue;
   }
 
   @Cron('*/5 * * * *')

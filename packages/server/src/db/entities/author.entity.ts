@@ -1,4 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { FilterableField } from '@nestjs-query/query-graphql';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Podcast } from './podcast.entity';
 
@@ -6,7 +7,7 @@ import { Podcast } from './podcast.entity';
 @ObjectType()
 export class Author {
   @PrimaryGeneratedColumn()
-  @Field()
+  @FilterableField()
   id: number;
 
   @Column()
