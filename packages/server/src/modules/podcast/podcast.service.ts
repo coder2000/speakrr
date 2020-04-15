@@ -3,12 +3,16 @@ import Parser from 'rss-parser';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cron } from '@nestjs/schedule';
 import { QueryService } from '@nestjs-query/core';
-import { TypeOrmQueryService } from '@nestjs-query/query-typeorm';
+import {
+  TypeOrmQueryService,
+  InjectTypeOrmQueryService,
+} from '@nestjs-query/query-typeorm';
 import { PinoLogger } from 'nestjs-pino';
 import { Repository } from 'typeorm';
 
 import { PodcastEntity } from '@entities/podcast.entity';
 import { QueueEntity } from '@entities/queue.entity';
+import { AuthorService } from '@modules/author';
 
 @QueryService(PodcastEntity)
 export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
@@ -17,8 +21,9 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
   constructor(
     @InjectRepository(PodcastEntity)
     private podcastRepository: Repository<PodcastEntity>,
-    @InjectRepository(QueueEntity)
-    private queueRepository: Repository<QueueEntity>,
+    @InjectTypeOrmQueryService(QueueEntity)
+    private queueService: QueryService<QueueEntity>,
+    private authorService: AuthorService,
     private readonly logger: PinoLogger,
   ) {
     super(podcastRepository);
@@ -31,29 +36,14 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
     });
   }
 
-  async findByAuthorId(authorId: number): Promise<PodcastEntity[]> {
-    return this.podcastRepository.find({ where: { authorId: authorId } });
-  }
-
-  async findByCategoryId(categoryId: number): Promise<PodcastEntity[]> {
-    return this.podcastRepository
-      .createQueryBuilder('podcast')
-      .leftJoinAndSelect(
-        'podcast.categories',
-        'category',
-        'category.id == categoryId',
-        { categoryId },
-      )
-      .getMany();
-  }
-
   @Cron('*/5 * * * *')
   async parseFromQueue() {
     this.logger.info('Starting parsing for next podcast.');
-    var next = await this.queueRepository
-      .createQueryBuilder('queue')
-      .where('queue.completed = false')
-      .getOne();
+
+    var next: QueueEntity = await this.queueService.query({
+      filter: { completed: { is: false } },
+      paging: { limit: 1 },
+    })[0];
 
     if (!next) {
       this.logger.info('No podcast queued.');
@@ -62,15 +52,16 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
 
     this.logger.info('Parsing ' + next.url + ' ...');
 
-    var podcast = await this.podcastRepository
-      .createQueryBuilder('podcast')
-      .where('podcast.link = :url', { url: next.url })
-      .getOne();
+    var podcast: PodcastEntity = await this.query({
+      filter: { link: { eq: next.url } },
+    })[0];
 
-    var data = await this.rss.parseURL(next.url).catch((error) => {
-      this.logger.error(error.message);
-      return null;
-    });
+    var data: Parser.Output = await this.rss
+      .parseURL(next.url)
+      .catch((error) => {
+        this.logger.error(error.message);
+        return null;
+      });
 
     if (!data) {
       this.logger.info('Unable to process feed.');
@@ -81,17 +72,19 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
       podcast = new PodcastEntity();
     }
 
+    var author = await this.authorService.findOrCreate(data.author.name);
+
     podcast.title = data.title;
     podcast.image = data.image.url;
     podcast.description = data.description;
     podcast.link = data.feedUrl;
     podcast.language = data.language;
     podcast.explicit = data.itunes.explicit === 'true' ? true : false;
+    podcast.author = author;
 
     this.podcastRepository.save(podcast);
 
     this.logger.info('Completed parsing.');
-    next.completed = true;
-    this.queueRepository.save(next);
+    this.queueService.updateOne(next.id, { completed: true });
   }
 }

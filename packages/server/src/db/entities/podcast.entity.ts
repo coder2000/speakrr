@@ -50,5 +50,6 @@ export class PodcastEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @Column({ nullable: true })
   authorId: number;
 }

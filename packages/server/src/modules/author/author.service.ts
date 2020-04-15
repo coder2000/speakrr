@@ -1,0 +1,27 @@
+import { QueryService } from '@nestjs-query/core';
+import { TypeOrmQueryService } from '@nestjs-query/query-typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import { AuthorEntity } from '@entities/author.entity';
+
+@QueryService(AuthorEntity)
+export class AuthorService extends TypeOrmQueryService<AuthorEntity> {
+  constructor(
+    @InjectRepository(AuthorEntity) authorRepository: Repository<AuthorEntity>,
+  ) {
+    super(authorRepository);
+  }
+
+  async findOrCreate(name: string): Promise<AuthorEntity> {
+    var author: AuthorEntity = await this.query({
+      filter: { name: { eq: name } },
+    })[0];
+
+    if (!author) {
+      author = new AuthorEntity();
+    }
+
+    return author;
+  }
+}

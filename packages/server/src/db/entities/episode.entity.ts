@@ -39,5 +39,6 @@ export class EpisodeEntity {
   @ManyToOne(() => PodcastEntity, (podcast) => podcast.episodes)
   podcast: PodcastEntity;
 
+  @Column({ nullable: true })
   podcastId: number;
 }
