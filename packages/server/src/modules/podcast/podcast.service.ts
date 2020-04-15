@@ -36,7 +36,10 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
   }
 
   async findByCategoryId(categoryId: number): Promise<PodcastEntity[]> {
-    return;
+    return this.podcastRepository
+      .createQueryBuilder('podcast')
+      .leftJoinAndSelect('podcast.categories', 'category')
+      .getMany();
   }
 
   @Cron('*/5 * * * *')
