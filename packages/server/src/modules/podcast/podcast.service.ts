@@ -38,7 +38,12 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
   async findByCategoryId(categoryId: number): Promise<PodcastEntity[]> {
     return this.podcastRepository
       .createQueryBuilder('podcast')
-      .leftJoinAndSelect('podcast.categories', 'category')
+      .leftJoinAndSelect(
+        'podcast.categories',
+        'category',
+        'category.id == categoryId',
+        { categoryId },
+      )
       .getMany();
   }
 
@@ -62,11 +67,19 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
       .where('podcast.link = :url', { url: next.url })
       .getOne();
 
+    var data = await this.rss.parseURL(next.url).catch((error) => {
+      this.logger.error(error.message);
+      return null;
+    });
+
+    if (!data) {
+      this.logger.info('Unable to process feed.');
+      return;
+    }
+
     if (!podcast) {
       podcast = new PodcastEntity();
     }
-
-    var data = await this.rss.parseURL(next.url);
 
     podcast.title = data.title;
     podcast.image = data.image.url;
