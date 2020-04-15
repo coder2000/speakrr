@@ -3,9 +3,9 @@ import { FilterableField } from '@nestjs-query/query-graphql';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { IsFQDN } from 'class-validator';
 
-@Entity()
-@ObjectType()
-export class Queue {
+@Entity('queue')
+@ObjectType('Queue')
+export class QueueEntity {
   @PrimaryGeneratedColumn()
   @FilterableField()
   id: number;

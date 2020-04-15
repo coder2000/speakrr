@@ -8,7 +8,7 @@ import { PinoLogger } from 'nestjs-pino';
 import { Repository } from 'typeorm';
 
 import { PodcastEntity } from '@entities/podcast.entity';
-import { Queue } from '@entities/queue.entity';
+import { QueueEntity } from '@entities/queue.entity';
 
 @QueryService(PodcastEntity)
 export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
@@ -17,7 +17,8 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
   constructor(
     @InjectRepository(PodcastEntity)
     private podcastRepository: Repository<PodcastEntity>,
-    @InjectRepository(Queue) private queueRepository: Repository<Queue>,
+    @InjectRepository(QueueEntity)
+    private queueRepository: Repository<QueueEntity>,
     private readonly logger: PinoLogger,
   ) {
     super(podcastRepository);

@@ -10,7 +10,7 @@ import { PodcastDto } from '@dto/podcast.dto';
 @Resolver()
 export class AuthorResolver extends CRUDResolver(AuthorDto, {
   create: { disabled: true },
-  relations: { many: { podcasts: { DTO: PodcastDto } } },
+  relations: { many: { podcasts: { DTO: PodcastDto, disableUpdate: true } } },
 }) {
   constructor(
     @InjectTypeOrmQueryService(AuthorEntity)

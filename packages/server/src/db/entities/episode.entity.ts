@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { PodcastEntity } from './podcast.entity';
 
-@Entity()
+@Entity('episode')
 export class EpisodeEntity {
   @PrimaryGeneratedColumn()
   id: number;

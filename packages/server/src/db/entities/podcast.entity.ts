@@ -12,7 +12,7 @@ import { AuthorEntity } from './author.entity';
 import { EpisodeEntity } from './episode.entity';
 import { CategoryEntity } from './category.entity';
 
-@Entity()
+@Entity('podcast')
 export class PodcastEntity {
   @PrimaryGeneratedColumn()
   id: number;
