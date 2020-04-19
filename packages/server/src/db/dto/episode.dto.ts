@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType, GraphQLISODateTime } from '@nestjs/graphql';
 import { FilterableField } from '@nestjs-query/query-graphql';
 
 @ObjectType('Episode')
@@ -33,7 +33,7 @@ export class EpisodeDto {
   @Field()
   duration: string;
 
-  @Field()
+  @Field(() => GraphQLISODateTime)
   publication: Date;
 
   @FilterableField()

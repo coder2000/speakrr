@@ -4,6 +4,7 @@ import { LoggerModule } from 'nestjs-pino';
 
 import { QueueModule } from '@modules/queue';
 import { AuthorModule } from '@modules/author';
+import { EpisodeModule } from '@modules/episode';
 import { PodcastService } from './podcast.service';
 import { PodcastResolver } from './podcast.resolver';
 import { PodcastEntity } from '@entities/podcast.entity';
@@ -14,6 +15,7 @@ import { PodcastEntity } from '@entities/podcast.entity';
     LoggerModule.forRoot(),
     QueueModule,
     AuthorModule,
+    EpisodeModule,
   ],
   providers: [PodcastService, PodcastResolver],
   exports: [PodcastService],

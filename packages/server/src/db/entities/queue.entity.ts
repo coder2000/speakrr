@@ -6,7 +6,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 @ObjectType('Queue')
 export class QueueEntity {
   @PrimaryGeneratedColumn()
-  @FilterableField()
+  @FilterableField({ nullable: true })
   id: number;
 
   @Column()

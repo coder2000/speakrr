@@ -12,9 +12,7 @@ const ADD_PODCAST = gql`
 `;
 
 interface Queue {
-  id: number;
   url: string;
-  completed: boolean;
 }
 
 interface CreateOneQueueInput {
@@ -31,7 +29,7 @@ export function Add() {
     { input: CreateOneQueueInput }
   >(ADD_PODCAST, {
     variables: {
-      input: { queue: { id: 0, url: url!, completed: false } },
+      input: { queue: { url: url! } },
     },
   });
 

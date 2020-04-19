@@ -33,7 +33,7 @@ export class EpisodeEntity {
   @Column()
   duration: string;
 
-  @Column()
+  @Column(() => Date)
   publication: Date;
 
   @ManyToOne(() => PodcastEntity, (podcast) => podcast.episodes)

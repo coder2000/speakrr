@@ -13,6 +13,7 @@ import { Repository } from 'typeorm';
 import { PodcastEntity } from '@entities/podcast.entity';
 import { QueueEntity } from '@entities/queue.entity';
 import { AuthorService } from '@modules/author';
+import { EpisodeService } from '@modules/episode';
 
 @QueryService(PodcastEntity)
 export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
@@ -24,6 +25,7 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
     @InjectTypeOrmQueryService(QueueEntity)
     private queueService: QueryService<QueueEntity>,
     private authorService: AuthorService,
+    private episodeService: EpisodeService,
     private readonly logger: PinoLogger,
   ) {
     super(podcastRepository);
@@ -81,6 +83,11 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
     podcast.language = data.language;
     podcast.explicit = data.itunes.explicit === 'true' ? true : false;
     podcast.author = author;
+
+    data.items.forEach(async (item) => {
+      var episode = await this.episodeService.create(item);
+      podcast.episodes.push(episode);
+    });
 
     this.podcastRepository.save(podcast);
 
