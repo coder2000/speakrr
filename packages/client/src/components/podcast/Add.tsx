@@ -4,19 +4,21 @@ import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
 const ADD_PODCAST = gql`
-  mutation addPodcast($podcast: PodcastInput!) {
-    addPodcast(podcastData: $podcast) {
+  mutation createOneQueue($input: CreateOneQueueInput!) {
+    createOneQueue(input: $input) {
       id
     }
   }
 `;
 
-interface Podcast {
+interface Queue {
   id: number;
+  url: string;
+  completed: boolean;
 }
 
-interface PodcastInput {
-  podcastUrl: string;
+interface CreateOneQueueInput {
+  queue: Queue;
 }
 
 export function Add() {
@@ -25,9 +27,13 @@ export function Add() {
   const { Title } = Typography;
 
   const [savePodcast, { error, data }] = useMutation<
-    { addPodcast: Podcast },
-    { podcast: PodcastInput }
-  >(ADD_PODCAST, { variables: { podcast: { podcastUrl: url! } } });
+    { createOneQueue: Queue },
+    { input: CreateOneQueueInput }
+  >(ADD_PODCAST, {
+    variables: {
+      input: { queue: { id: 0, url: url!, completed: false } },
+    },
+  });
 
   const onFinish = () => {
     savePodcast();
@@ -41,6 +47,7 @@ export function Add() {
           <Title>Add Podcast</Title>
         </Col>
       </Row>
+      {error ? <p>{error.message}</p> : null}
       <Form onFinish={onFinish}>
         <Form.Item
           wrapperCol={{ span: 12, offset: 4 }}
