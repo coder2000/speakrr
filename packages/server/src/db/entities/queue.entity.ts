@@ -6,14 +6,14 @@ import { Field, ObjectType } from '@nestjs/graphql';
 @ObjectType('Queue')
 export class QueueEntity {
   @PrimaryGeneratedColumn()
-  @FilterableField({ nullable: true })
+  @FilterableField()
   id: number;
 
   @Column()
   @Field()
   url: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: false })
   @FilterableField({ nullable: true })
   completed?: boolean;
 }

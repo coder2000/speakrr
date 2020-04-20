@@ -43,7 +43,7 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
     this.logger.info('Starting parsing for next podcast.');
 
     var next: QueueEntity = await this.queueService.query({
-      filter: { completed: { is: false } },
+      filter: { completed: { is: false || null } },
       paging: { limit: 1 },
     })[0];
 
