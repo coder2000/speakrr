@@ -17,7 +17,7 @@ import { TypeOrmPinoLogger } from './TypeOrmPinoLogger';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
-      imports: [LoggerModule],
+      imports: [LoggerModule.forRoot()],
       inject: [PinoLogger],
       useFactory: (logger: PinoLogger) => {
         logger.setContext('TypeOrm');

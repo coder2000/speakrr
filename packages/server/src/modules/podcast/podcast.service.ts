@@ -14,6 +14,7 @@ import { PodcastEntity } from '@entities/podcast.entity';
 import { QueueEntity } from '@entities/queue.entity';
 import { AuthorService } from '@modules/author';
 import { EpisodeService } from '@modules/episode';
+import { QueueService } from '@modules/queue';
 
 @QueryService(PodcastEntity)
 export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
@@ -22,8 +23,7 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
   constructor(
     @InjectRepository(PodcastEntity)
     private podcastRepository: Repository<PodcastEntity>,
-    @InjectTypeOrmQueryService(QueueEntity)
-    private queueService: QueryService<QueueEntity>,
+    private queueService: QueueService,
     private authorService: AuthorService,
     private episodeService: EpisodeService,
     private readonly logger: PinoLogger,
@@ -31,6 +31,7 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
     super(podcastRepository);
 
     this.logger.setContext(PodcastService.name);
+
     this.rss = new Parser({
       customFields: {
         feed: ['language'],
@@ -43,7 +44,9 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
     this.logger.info('Starting parsing for next podcast.');
 
     var next: QueueEntity = await this.queueService.query({
-      filter: { completed: { is: false || null } },
+      filter: {
+        or: [{ completed: { is: false } }, { completed: { is: null } }],
+      },
       paging: { limit: 1 },
     })[0];
 
