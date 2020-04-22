@@ -3,10 +3,7 @@ import Parser from 'rss-parser';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cron } from '@nestjs/schedule';
 import { QueryService } from '@nestjs-query/core';
-import {
-  TypeOrmQueryService,
-  InjectTypeOrmQueryService,
-} from '@nestjs-query/query-typeorm';
+import { TypeOrmQueryService } from '@nestjs-query/query-typeorm';
 import { PinoLogger } from 'nestjs-pino';
 import { Repository } from 'typeorm';
 
