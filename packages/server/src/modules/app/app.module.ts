@@ -17,7 +17,7 @@ import { TypeOrmPinoLogger } from './TypeOrmPinoLogger';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
-      imports: [LoggerModule.forRoot()],
+      imports: [LoggerModule.forRoot({ pinoHttp: { level: 'debug' } })],
       inject: [PinoLogger],
       useFactory: (logger: PinoLogger) => {
         logger.setContext('TypeOrm');
@@ -26,7 +26,7 @@ import { TypeOrmPinoLogger } from './TypeOrmPinoLogger';
           database: 'database.sqlite',
           autoLoadEntities: true,
           synchronize: false,
-          logging: true,
+          logging: 'all',
           logger: new TypeOrmPinoLogger(logger),
         };
       },

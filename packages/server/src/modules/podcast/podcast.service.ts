@@ -31,7 +31,7 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
 
     this.rss = new Parser({
       customFields: {
-        feed: ['language'],
+        feed: ['language', 'itunes:author'],
       },
     });
   }
@@ -40,58 +40,61 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
   async parseFromQueue() {
     this.logger.info('Starting parsing for next podcast.');
 
-    var next: QueueEntity = await this.queueService.query({
+    var next: QueueEntity[] = await this.queueService.query({
       filter: {
         or: [{ completed: { is: false } }, { completed: { is: null } }],
       },
-      paging: { limit: 1 },
-    })[0];
+    });
+
+    this.logger.info('%d podcasts to parse', next.length);
 
     if (!next) {
       this.logger.info('No podcast queued.');
       return;
     }
 
-    this.logger.info('Parsing ' + next.url + ' ...');
+    next.forEach(async (cast) => {
+      this.logger.info('Parsing %s ...', cast.url);
 
-    var podcast: PodcastEntity = await this.query({
-      filter: { link: { eq: next.url } },
-    })[0];
+      var podcast: PodcastEntity = await this.query({
+        filter: { link: { eq: cast.url } },
+      })[0];
 
-    var data: Parser.Output = await this.rss
-      .parseURL(next.url)
-      .catch((error) => {
-        this.logger.error(error.message);
-        return null;
+      var data: Parser.Output = await this.rss
+        .parseURL(cast.url)
+        .catch((error) => {
+          this.logger.error(error.message);
+          return null;
+        });
+
+      if (!data) {
+        this.logger.info('Unable to process feed.');
+        return;
+      }
+
+      if (!podcast) {
+        podcast = new PodcastEntity();
+      }
+
+      var author = await this.authorService.findOrCreate(data.author);
+
+      podcast.title = data.title;
+      podcast.image = data.image.url;
+      podcast.description = data.description;
+      podcast.link = data.feedUrl;
+      podcast.language = data.language;
+      podcast.explicit = data.itunes.explicit === 'true' ? true : false;
+      podcast.author = author;
+
+      data.items.forEach(async (item) => {
+        var episode = await this.episodeService.create(item);
+        podcast.episodes.push(episode);
       });
 
-    if (!data) {
-      this.logger.info('Unable to process feed.');
-      return;
-    }
+      this.podcastRepository.save(podcast);
 
-    if (!podcast) {
-      podcast = new PodcastEntity();
-    }
-
-    var author = await this.authorService.findOrCreate(data.author.name);
-
-    podcast.title = data.title;
-    podcast.image = data.image.url;
-    podcast.description = data.description;
-    podcast.link = data.feedUrl;
-    podcast.language = data.language;
-    podcast.explicit = data.itunes.explicit === 'true' ? true : false;
-    podcast.author = author;
-
-    data.items.forEach(async (item) => {
-      var episode = await this.episodeService.create(item);
-      podcast.episodes.push(episode);
+      this.logger.info('Completed parsing.');
+      this.queueService.updateOne(cast.id, { completed: true });
     });
-
-    this.podcastRepository.save(podcast);
-
-    this.logger.info('Completed parsing.');
-    this.queueService.updateOne(next.id, { completed: true });
   }
 }
