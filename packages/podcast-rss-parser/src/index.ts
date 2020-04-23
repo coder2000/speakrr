@@ -1,0 +1,3 @@
+class PodcastParser {}
+
+export = PodcastParser;

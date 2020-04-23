@@ -49,11 +49,13 @@
     "graphql-tools": "^5.0.0",
     "nestjs-pino": "^1.2.0",
     "pg": "^8.0.3",
+    "podcast-rss-parser": "^0.0.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rss-parser": "^3.7.6",
     "rxjs": "^6.5.5",
     "sqlite3": "^4.1.1",
+    "tslib": "^1.11.1",
     "typeorm": "^0.2.24"
   },
   "devDependencies": {

@@ -7,6 +7,8 @@ import { TypeOrmQueryService } from '@nestjs-query/query-typeorm';
 import { PinoLogger } from 'nestjs-pino';
 import { Repository } from 'typeorm';
 
+import { PodcastParser } from 'podcast-rss-parser';
+
 import { PodcastEntity } from '@entities/podcast.entity';
 import { QueueEntity } from '@entities/queue.entity';
 import { AuthorService } from '@modules/author';
