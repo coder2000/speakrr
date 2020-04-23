@@ -36,7 +36,7 @@ import { TypeOrmPinoLogger } from './TypeOrmPinoLogger';
           autoLoadEntities: true,
           synchronize: false,
           migrationsRun: true,
-          migrations: ['src/**/migrations/*.{ts,js}'],
+          migrations: ['**/migrations/*.js'],
           logging: 'all',
           logger: new TypeOrmPinoLogger(logger),
         };

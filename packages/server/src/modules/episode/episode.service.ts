@@ -23,6 +23,7 @@ export class EpisodeService extends TypeOrmQueryService<EpisodeEntity> {
     episode.filesize = item.enclosure.length;
     episode.guid = item.guid;
     episode.type = item.enclosure.type;
+    episode.description = item.content;
 
     return this.episodeRepository.save(episode);
   }
