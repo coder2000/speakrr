@@ -5,6 +5,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LoggerModule, PinoLogger } from 'nestjs-pino';
 
 import { PodcastModule } from '@modules/podcast';
@@ -16,16 +17,26 @@ import { TypeOrmPinoLogger } from './TypeOrmPinoLogger';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRootAsync({
-      imports: [LoggerModule.forRoot({ pinoHttp: { level: 'debug' } })],
-      inject: [PinoLogger],
-      useFactory: (logger: PinoLogger) => {
+      imports: [
+        LoggerModule.forRoot({ pinoHttp: { level: 'debug' } }),
+        ConfigModule,
+      ],
+      inject: [PinoLogger, ConfigService],
+      useFactory: (logger: PinoLogger, config: ConfigService) => {
         logger.setContext('TypeOrm');
         return {
-          type: 'sqlite',
-          database: 'database.sqlite',
+          type: 'postgres' as 'postgres',
+          database: config.get<string>('DATABASE_SCHEMA', 'speakrr'),
+          host: config.get<string>('DATABASE_HOST', 'localhost'),
+          port: config.get<number>('DATABASE_PORT', 5432),
+          username: config.get<string>('DATABASE_USERNAME', 'speakrr'),
+          password: config.get<string>('DATABASE_PASSWORD', 'speakrr'),
           autoLoadEntities: true,
           synchronize: false,
+          migrationsRun: true,
+          migrations: [__dirname + '/**/migrations/*.{ts,js}'],
           logging: 'all',
           logger: new TypeOrmPinoLogger(logger),
         };
