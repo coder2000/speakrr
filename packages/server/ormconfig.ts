@@ -17,7 +17,7 @@ const databaseConfig: ConnectionOptions = {
   synchronize: false,
 
   cli: {
-    migrationsDir: __dirname + '/src/db/migrations',
+    migrationsDir: 'src/db/migrations',
   },
 };
 
