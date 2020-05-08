@@ -12,7 +12,6 @@ import { QueueEntity } from '@entities/queue.entity';
 import { AuthorService } from '@modules/author';
 import { EpisodeService } from '@modules/episode';
 import { QueueService } from '@modules/queue';
-import { EpisodeEntity } from '@entities/episode.entity';
 
 @QueryService(PodcastEntity)
 export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
