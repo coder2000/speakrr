@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, PageHeader, Card } from 'antd';
+import { Button, PageHeader, Card, Row, Col } from 'antd';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -70,9 +70,18 @@ export function Home() {
         <>
           {data &&
             data.podcasts.edges.map((edge) => (
-              <Card title={edge.node.title} key={edge.node.id}>
-                {edge.node.description}
-              </Card>
+              <Row gutter={[0, 24]}>
+                <Col offset={3} span={18}>
+                  <Card title={edge.node.title} key={edge.node.id}>
+                    <Row gutter={8}>
+                      <Col>
+                        <img src={edge.node.image} />
+                      </Col>
+                      <Col span={20}>{edge.node.description}</Col>
+                    </Row>
+                  </Card>
+                </Col>
+              </Row>
             ))}
         </>
       )}
