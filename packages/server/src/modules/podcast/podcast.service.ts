@@ -7,13 +7,12 @@ import { TypeOrmQueryService } from '@nestjs-query/query-typeorm';
 import { PinoLogger } from 'nestjs-pino';
 import { Repository } from 'typeorm';
 
-import { PodcastParser } from 'podcast-rss-parser';
-
 import { PodcastEntity } from '@entities/podcast.entity';
 import { QueueEntity } from '@entities/queue.entity';
 import { AuthorService } from '@modules/author';
 import { EpisodeService } from '@modules/episode';
 import { QueueService } from '@modules/queue';
+import { EpisodeEntity } from '@entities/episode.entity';
 
 @QueryService(PodcastEntity)
 export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
@@ -33,7 +32,7 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
 
     this.rss = new Parser({
       customFields: {
-        feed: ['language', 'itunes:author'],
+        feed: ['language'],
       },
     });
   }
@@ -74,11 +73,13 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
         return;
       }
 
+      this.logger.debug(data);
+
       if (!podcast) {
         podcast = new PodcastEntity();
       }
 
-      var author = await this.authorService.findOrCreate(data.author);
+      var author = await this.authorService.findOrCreate(data.itunes.author);
 
       podcast.title = data.title;
       podcast.image = data.image.url;
@@ -87,6 +88,8 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
       podcast.language = data.language;
       podcast.explicit = data.itunes.explicit === 'true' ? true : false;
       podcast.author = author;
+
+      podcast.episodes = new Array();
 
       data.items.forEach(async (item) => {
         var episode = await this.episodeService.create(item);

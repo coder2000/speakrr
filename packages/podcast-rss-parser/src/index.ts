@@ -1,3 +1,0 @@
-class PodcastParser {}
-
-export = PodcastParser;

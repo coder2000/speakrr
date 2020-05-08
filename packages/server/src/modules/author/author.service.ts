@@ -14,12 +14,14 @@ export class AuthorService extends TypeOrmQueryService<AuthorEntity> {
   }
 
   async findOrCreate(name: string): Promise<AuthorEntity> {
-    var author: AuthorEntity = await this.query({
+    var authors: AuthorEntity[] = await this.query({
       filter: { name: { eq: name } },
-    })[0];
+    });
 
-    if (!author) {
-      author = new AuthorEntity();
+    if (authors.length <= 0) {
+      var author: AuthorEntity = await this.createOne({ name: name });
+    } else {
+      var author = authors[0];
     }
 
     return author;
