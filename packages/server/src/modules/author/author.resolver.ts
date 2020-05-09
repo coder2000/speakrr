@@ -1,7 +1,6 @@
 import { Resolver } from '@nestjs/graphql';
 import { CRUDResolver } from '@nestjs-query/query-graphql';
-import { QueryService } from '@nestjs-query/core';
-import { InjectTypeOrmQueryService } from '@nestjs-query/query-typeorm';
+import { InjectQueryService, QueryService } from '@nestjs-query/core';
 
 import { AuthorEntity } from '@entities/author.entity';
 import { AuthorDto } from '@dto/author.dto';
@@ -13,7 +12,7 @@ export class AuthorResolver extends CRUDResolver(AuthorDto, {
   relations: { many: { podcasts: { DTO: PodcastDto, disableUpdate: true } } },
 }) {
   constructor(
-    @InjectTypeOrmQueryService(AuthorEntity)
+    @InjectQueryService(AuthorEntity)
     authorService: QueryService<AuthorEntity>,
   ) {
     super(authorService);
