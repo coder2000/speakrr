@@ -1,7 +1,9 @@
 import { Field, ObjectType, GraphQLISODateTime } from '@nestjs/graphql';
-import { FilterableField } from '@nestjs-query/query-graphql';
+import { FilterableField, Relation as One } from '@nestjs-query/query-graphql';
+import { PodcastDto } from './podcast.dto';
 
 @ObjectType('Episode')
+@One('podcast', () => PodcastDto, { disableUpdate: true })
 export class EpisodeDto {
   @FilterableField()
   id: number;

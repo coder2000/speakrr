@@ -1,10 +1,21 @@
 import { Module } from '@nestjs/common';
+import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { CategoryEntity } from '@entities/category.entity';
-import { CategoryResolver } from './category.resolver';
+import { CategoryDto } from '@dto/category.dto';
 
 @Module({
-  imports: [NestjsQueryTypeOrmModule.forFeature([CategoryEntity])],
-  providers: [CategoryResolver],
+  imports: [
+    NestjsQueryGraphQLModule.forFeature({
+      imports: [NestjsQueryTypeOrmModule.forFeature([CategoryEntity])],
+      resolvers: [
+        {
+          DTOClass: CategoryDto,
+          EntityClass: CategoryEntity,
+          create: { disabled: true },
+        },
+      ],
+    }),
+  ],
 })
 export class CategoryModule {}
