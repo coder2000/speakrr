@@ -1,10 +1,27 @@
-import React from 'react';
-import { Button, PageHeader, Card, Row, Col } from 'antd';
+import React, { useState } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import {
+  AppBar,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Container,
+  Fab,
+  Grid,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from '@material-ui/core';
+import {
+  Add as AddIcon,
+  Favorite as FavoriteIcon,
+  MoreVert as MoreVertIcon,
+} from '@material-ui/icons';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
-import { DeleteOutlined, FolderOpenOutlined } from '@ant-design/icons';
 
 const GET_PODCASTS = gql`
   query podcasts {
@@ -58,6 +75,17 @@ interface Podcasts {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
+  appbar: {
+    marginBottom: theme.spacing(2),
+  },
+  fab: {
+    margin: 0,
+    top: 'auto',
+    left: 'auto',
+    bottom: 20,
+    right: 20,
+    position: 'fixed',
+  },
   title: {
     flexGrow: 1,
   },
@@ -66,45 +94,86 @@ const useStyles = makeStyles((theme: Theme) => ({
 export function Home() {
   const { loading, data } = useQuery<Podcasts>(GET_PODCASTS);
   const classes = useStyles();
+  const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
+
+  const handleCardMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorElement(event.currentTarget);
+  };
+
+  const handleCardMenuClose = () => {
+    setAnchorElement(null);
+  };
 
   return (
     <>
-      <AppBar>
+      <AppBar position="static" className={classes.appbar}>
         <Toolbar>
-          <Typography className={classes.title} variant="h6">
+          <Typography
+            className={classes.title}
+            variant="h6"
+            color="textSecondary"
+          >
             Speakrr
           </Typography>
         </Toolbar>
       </AppBar>
 
-      {loading ? (
-        <h3>Loading...</h3>
-      ) : (
-        <>
-          {data &&
-            data.podcasts.edges.map((edge) => (
-              <Row gutter={[0, 24]}>
-                <Col offset={3} span={18}>
-                  <Card
-                    title={edge.node.title}
-                    key={edge.node.id}
-                    actions={[
-                      <DeleteOutlined key="delete" />,
-                      <FolderOpenOutlined key="open" />,
-                    ]}
-                  >
-                    <Row gutter={8}>
-                      <Col>
-                        <img src={edge.node.image} />
-                      </Col>
-                      <Col span={20}>{edge.node.description}</Col>
-                    </Row>
-                  </Card>
-                </Col>
-              </Row>
-            ))}
-        </>
-      )}
+      <Container>
+        {loading ? (
+          <h3>Loading...</h3>
+        ) : (
+          <>
+            {data &&
+              data.podcasts.edges.map((edge) => (
+                <Grid container spacing={3}>
+                  <Grid item>
+                    <Card key={edge.node.id}>
+                      <CardHeader
+                        title={edge.node.title}
+                        action={
+                          <IconButton onClick={handleCardMenuOpen}>
+                            <MoreVertIcon />
+                          </IconButton>
+                        }
+                      />
+                      <CardContent>
+                        <Grid container>
+                          <Grid item xs={2}>
+                            <img src={edge.node.image} />
+                          </Grid>
+                          <Grid item xs={10}>
+                            <Typography variant="body2">
+                              {edge.node.description}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </CardContent>
+                      <CardActions>
+                        <IconButton>
+                          <FavoriteIcon />
+                        </IconButton>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                </Grid>
+              ))}
+          </>
+        )}
+
+        <Menu
+          anchorEl={anchorElement}
+          keepMounted={true}
+          open={Boolean(anchorElement)}
+          onClose={handleCardMenuClose}
+        >
+          <MenuItem onClick={handleCardMenuClose}>Edit</MenuItem>
+          <MenuItem onClick={handleCardMenuClose}>Remove</MenuItem>
+        </Menu>
+
+        <Fab color="primary" className={classes.fab}>
+          <AddIcon />
+        </Fab>
+      </Container>
     </>
   );
 }
