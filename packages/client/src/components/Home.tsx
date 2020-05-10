@@ -8,11 +8,11 @@ import {
   Toolbar,
   Typography,
 } from '@material-ui/core';
-import { PodcastCard } from './PodcastCard';
+import { PodcastCard } from './podcast/PodcastCard';
 import { Add as AddIcon } from '@material-ui/icons';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
-import { Podcast } from '../../interfaces';
+import { Podcast } from '../interfaces';
 
 const GET_PODCASTS = gql`
   query podcasts {

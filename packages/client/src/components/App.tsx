@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { CssBaseline } from '@material-ui/core';
-import { Add, Home } from './podcast';
+import { Add } from './podcast';
+import { Home } from './Home';
 
 export function App() {
   const client = new ApolloClient({
