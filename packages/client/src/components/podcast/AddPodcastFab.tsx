@@ -73,21 +73,21 @@ export function AddPodcastFab() {
         <AddIcon />
       </Fab>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Dialog open={open} onClose={handleCloseClick}>
-          <DialogTitle>Add Podcast</DialogTitle>
+      <Dialog open={open} onClose={handleCloseClick}>
+        <DialogTitle>Add Podcast</DialogTitle>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <DialogContent>
             <TextField
               label="Podcast URL"
-              inputRef={register}
+              inputRef={register({ required: true })}
               name="podcastUrl"
             />
           </DialogContent>
           <DialogActions>
             <Button type="submit">Add</Button>
           </DialogActions>
-        </Dialog>
-      </form>
+        </form>
+      </Dialog>
     </>
   );
 }

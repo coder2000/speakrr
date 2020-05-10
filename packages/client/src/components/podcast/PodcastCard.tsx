@@ -49,7 +49,7 @@ export function PodcastCard(props: PodcastProps) {
         <CardContent>
           <Grid container>
             <Grid item xs={2}>
-              <img src={podcast.image} />
+              <img src={podcast.image} height="150" width="150" />
             </Grid>
             <Grid item xs={10}>
               <Typography variant="body2">{podcast.description}</Typography>
