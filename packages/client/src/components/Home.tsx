@@ -3,16 +3,15 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import {
   AppBar,
   Container,
-  Fab,
   Grid,
   Toolbar,
   Typography,
 } from '@material-ui/core';
 import { PodcastCard } from './podcast/PodcastCard';
-import { Add as AddIcon } from '@material-ui/icons';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import { Podcast } from '../interfaces';
+import { AddPodcastFab } from './podcast/AddPodcastFab';
 
 const GET_PODCASTS = gql`
   query podcasts {
@@ -62,14 +61,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   appbar: {
     marginBottom: theme.spacing(2),
   },
-  fab: {
-    margin: 0,
-    top: 'auto',
-    left: 'auto',
-    bottom: 20,
-    right: 20,
-    position: 'fixed',
-  },
   title: {
     flexGrow: 1,
   },
@@ -108,11 +99,9 @@ export function Home() {
               ))}
           </>
         )}
-
-        <Fab color="primary" className={classes.fab}>
-          <AddIcon />
-        </Fab>
       </Container>
+
+      <AddPodcastFab />
     </>
   );
 }
