@@ -1,9 +1,9 @@
-import { Episode } from './episode';
+import { EpisodeConnection } from './episode';
 
 export interface Podcast {
   id: number;
   title: string;
   description: string;
   image: string;
-  episodes: Episode[];
+  episodes: EpisodeConnection;
 }

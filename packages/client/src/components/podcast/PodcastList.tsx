@@ -1,14 +1,9 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { Podcast } from '../../interfaces';
+import { PageInfo, Podcast } from '../../interfaces';
 import { Grid } from '@material-ui/core';
 import { PodcastCard } from './PodcastCard';
-
-interface PageInfo {
-  hasNextPage: Boolean;
-  endCursor: String;
-}
 
 interface PodcastEdge {
   node: Podcast;

@@ -25,6 +25,7 @@ import clsx from 'clsx';
 import { Podcast } from '../../interfaces';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
+import { EpisodeList } from '../episodes';
 
 interface PodcastProps {
   podcast: Podcast;
@@ -129,6 +130,7 @@ export function PodcastCard(props: PodcastProps) {
           <Collapse in={expanded} unmountOnExit>
             <CardContent>
               <Typography>Episodes</Typography>
+              <EpisodeList episodes={podcast.episodes} />
             </CardContent>
           </Collapse>
         </Card>
