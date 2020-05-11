@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Speakrr React client",
   "scripts": {
-    "start": "webpack-dev-server --open --config webpack.dev.ts",
+    "start:dev": "webpack-dev-server --open --config webpack.dev.ts",
     "build": "cross-env TS_NODE_PROEJCT=\"tsconfig.webpack.json\" webpack --mode production --config webpack.prod.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

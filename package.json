@@ -4,9 +4,16 @@
   "workspaces": [
     "packages/*"
   ],
-  "scripts": {},
+  "scripts": {
+    "start:client:dev": "yarn workspace speakrr-client start:dev",
+    "start:server:dev": "yarn workspace speakrr-server start:dev",
+    "start:dev": "concurrently --kill-others-on-fail \"yarn start:server:dev\" \"yarn start:client:dev\""
+  },
   "nohoist": [
     "**/typeorm/**",
     "**/typeorm"
-  ]
+  ],
+  "dependencies": {
+    "concurrently": "^5.2.0"
+  }
 }
