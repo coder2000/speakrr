@@ -78,7 +78,7 @@ export function AddPodcastFab() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogContent>
             <TextField
-              label="Podcast URL"
+              label="Podcast RSS URL"
               inputRef={register({ required: true })}
               name="podcastUrl"
             />
