@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 type FormData = {
-  podcastUrl: string;
+  podcastUrl: String;
 };
 
 const ADD_PODCAST = gql`
@@ -38,7 +38,7 @@ const ADD_PODCAST = gql`
 `;
 
 interface Queue {
-  url: string;
+  url: String;
 }
 
 interface CreateOneQueueInput {
