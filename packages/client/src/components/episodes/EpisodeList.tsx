@@ -1,10 +1,47 @@
 import React from 'react';
 import { EpisodeConnection } from '../../interfaces';
-import { Grid } from '@material-ui/core';
+import { Grid, GridProps } from '@material-ui/core';
 import { EpisodeItem } from './EpisodeItem';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
 interface EpisodeListProps {
   episodes: EpisodeConnection;
+}
+
+interface StyleProps {
+  backgroundImage: string;
+}
+
+const useStyles = makeStyles((theme: Theme) => ({
+  episode: {
+    flexGrow: 1,
+    '&:before': {
+      content: ' ',
+      display: 'block',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      height: '100%',
+      width: '100%',
+      backgroundImage: (props: StyleProps) => `url(${props.backgroundImage})`,
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+      backgroundPosition: '50% 0',
+      opacity: 0.6,
+      zIndex: 1,
+    },
+  },
+}));
+
+function GridBackground(props: StyleProps & Omit<GridProps, keyof StyleProps>) {
+  const { backgroundImage, children, ...other } = props;
+  const classes = useStyles({ backgroundImage: backgroundImage });
+
+  return (
+    <Grid className={classes.episode} {...other}>
+      {children}
+    </Grid>
+  );
 }
 
 export function EpisodeList(props: EpisodeListProps) {
@@ -14,11 +51,15 @@ export function EpisodeList(props: EpisodeListProps) {
     <>
       {episodes ? (
         episodes.edges.map((episode) => (
-          <Grid container key={`episode-row-${episode.node.id}`}>
-            <Grid item key={`episode-col-${episode.node.id}`}>
+          <GridBackground
+            backgroundImage={episode.node.image}
+            container
+            key={`episode-row-${episode.node.id}`}
+          >
+            <Grid item key={`episode-col-${episode.node.id}`} xs>
               <EpisodeItem episode={episode.node} />
             </Grid>
-          </Grid>
+          </GridBackground>
         ))
       ) : (
         <h2>No Episodes</h2>
