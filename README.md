@@ -19,7 +19,7 @@ yarn install
 ## Usage
 
 ```sh
-yarn run start
+yarn run start:dev
 ```
 
 ## Run tests
@@ -32,12 +32,13 @@ yarn run test
 
 👤 **Dieter (coder2000) Lunn**
 
-* Website: https://github.com/coder2000
-* Github: [@coder2000](https://github.com/coder2000)
+- Website: https://github.com/coder2000
+- Github: [@coder2000](https://github.com/coder2000)
 
 ## Show your support
 
 Give a ⭐️ if this project helped you!
 
-***
+---
+
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
