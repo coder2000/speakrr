@@ -18,6 +18,16 @@ yarn install
 
 ## Usage
 
+To run it requires a PostgreSQL instance with the following environment variables set.
+
+```sh
+DATABASE_SCHEMA: # default - speakrr
+DATABASE_USERNAME: # default - speakrr
+DATABASE_PASSWORD: # default - speakrr
+DATABASE_HOST: # default - localhost
+DATABASE_PORT: # default - 5432
+```
+
 ```sh
 yarn run start:dev
 ```
