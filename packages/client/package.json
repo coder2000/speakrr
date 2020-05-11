@@ -62,6 +62,7 @@
     "clsx": "^1.1.0",
     "dayjs": "^1.8.26",
     "graphql": "^14.0.0",
+    "html-react-parser": "^0.10.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^5.6.3",

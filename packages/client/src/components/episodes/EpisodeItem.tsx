@@ -1,7 +1,7 @@
 import React from 'react';
 import { Episode } from '../../interfaces';
 import { Grid, Typography } from '@material-ui/core';
-import ReactHtmlParser from 'react-html-parser';
+import parse from 'html-react-parser';
 
 interface EpisodeItemProps {
   episode: Episode;
@@ -19,8 +19,8 @@ export function EpisodeItem(props: EpisodeItemProps) {
       </Grid>
       <Grid container>
         <Grid item xs>
-          <Typography variant="body2">
-            {ReactHtmlParser(episode.description)}
+          <Typography variant="body2" component="span">
+            {parse(episode.description)}
           </Typography>
         </Grid>
       </Grid>
