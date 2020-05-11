@@ -38,6 +38,17 @@ const GET_PODCASTS = gql`
           title
           description
           image
+          episodes {
+            edges {
+              node {
+                id
+                title
+                description
+                image
+                duration
+              }
+            }
+          }
         }
         cursor
       }
