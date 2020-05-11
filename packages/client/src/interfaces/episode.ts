@@ -1,16 +1,16 @@
 import { PageInfo } from './pageinfo';
 
 export interface Episode {
-  id: Number;
-  title: String;
-  description: String;
-  duration: String;
-  image: String;
+  id: number;
+  title: string;
+  description: string;
+  duration: string;
+  image: string;
 }
 
 export interface EpisodeEdge {
   node: Episode;
-  cursor: String;
+  cursor: string;
 }
 
 export interface EpisodeConnection {

@@ -1,6 +1,6 @@
 export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor: String;
-  endCursor: String;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string;
+  endCursor: string;
 }
