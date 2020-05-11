@@ -17,7 +17,7 @@ export class EpisodeDto {
   @Field()
   url: string;
 
-  @Field()
+  @Field({ nullable: true })
   image: string;
 
   @Field()

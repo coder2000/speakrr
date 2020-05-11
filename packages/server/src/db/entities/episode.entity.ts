@@ -15,7 +15,7 @@ export class EpisodeEntity {
   @Column()
   url: string;
 
-  @Column()
+  @Column({ nullable: true })
   image: string;
 
   @Column()
