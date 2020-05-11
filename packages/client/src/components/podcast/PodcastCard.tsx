@@ -11,13 +11,17 @@ import {
   MenuItem,
   ListItemIcon,
   Zoom,
+  Collapse,
 } from '@material-ui/core';
 import {
   Delete as DeleteIcon,
   Edit as EditIcon,
+  ExpandMore as ExpandMoreIcon,
   Favorite as FavoriteIcon,
   MoreVert as MoreVertIcon,
 } from '@material-ui/icons';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import clsx from 'clsx';
 import { Podcast } from '../../interfaces';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
@@ -42,14 +46,29 @@ const DELETE_PODCAST = gql`
   }
 `;
 
+const useStyles = makeStyles((theme: Theme) => ({
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto !important',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+}));
+
 export function PodcastCard(props: PodcastProps) {
   const { podcast } = props;
   const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
   const [visible, setVisible] = useState(true);
+  const [expanded, setExpanded] = useState(false);
   const [deletePodcast, {}] = useMutation<
     { deleteOnePodcast: DeleteResponse },
     { input: DeleteOneInput }
   >(DELETE_PODCAST);
+  const classes = useStyles();
 
   const handleCardMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorElement(event.currentTarget);
@@ -66,6 +85,10 @@ export function PodcastCard(props: PodcastProps) {
 
     setAnchorElement(null);
     setVisible(false);
+  };
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
   };
 
   return (
@@ -94,7 +117,20 @@ export function PodcastCard(props: PodcastProps) {
             <IconButton>
               <FavoriteIcon />
             </IconButton>
+            <IconButton
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded,
+              })}
+              onClick={handleExpandClick}
+            >
+              <ExpandMoreIcon />
+            </IconButton>
           </CardActions>
+          <Collapse in={expanded} unmountOnExit>
+            <CardContent>
+              <Typography>Episodes</Typography>
+            </CardContent>
+          </Collapse>
         </Card>
       </Zoom>
 

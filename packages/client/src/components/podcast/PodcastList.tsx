@@ -67,8 +67,8 @@ export function PodcastList() {
         <>
           {data &&
             data.podcasts.edges.map((edge) => (
-              <Grid container spacing={3}>
-                <Grid item>
+              <Grid container spacing={3} key={`podcast-row-${edge.node.id}`}>
+                <Grid item key={`podcast-col-${edge.node.id}`}>
                   <PodcastCard podcast={edge.node} />
                 </Grid>
               </Grid>

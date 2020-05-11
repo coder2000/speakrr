@@ -1,9 +1,8 @@
 import React from 'react';
-import { gql } from 'apollo-boost';
-import { useLazyQuery } from '@apollo/react-hooks';
+import { Episode } from '../../interfaces';
 
 interface EpisodeProps {
-  podcastId: Number;
+  episodes: Episode[];
 }
 
 export function EpisodeList(props: EpisodeProps) {}
