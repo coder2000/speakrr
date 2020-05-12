@@ -95,45 +95,51 @@ export function PodcastCard(props: PodcastProps) {
   return (
     <>
       <Zoom in={visible} timeout={{ enter: 0, exit: 600 }} unmountOnExit>
-        <Card key={podcast.id} id={`podcast-${podcast.id}`}>
-          <CardHeader
-            title={podcast.title}
-            action={
-              <IconButton onClick={handleCardMenuOpen}>
-                <MoreVertIcon />
-              </IconButton>
-            }
-          />
-          <CardContent>
-            <Grid container>
-              <Grid item xs={2}>
-                <img src={podcast.image} height="150" width="150" />
-              </Grid>
-              <Grid item xs={10}>
-                <Typography variant="body2">{podcast.description}</Typography>
-              </Grid>
-            </Grid>
-          </CardContent>
-          <CardActions>
-            <IconButton>
-              <FavoriteIcon />
-            </IconButton>
-            <IconButton
-              className={clsx(classes.expand, {
-                [classes.expandOpen]: expanded,
-              })}
-              onClick={handleExpandClick}
-            >
-              <ExpandMoreIcon />
-            </IconButton>
-          </CardActions>
-          <Collapse in={expanded} unmountOnExit>
-            <CardContent>
-              <Typography>Episodes</Typography>
-              <EpisodeList episodes={podcast.episodes} />
-            </CardContent>
-          </Collapse>
-        </Card>
+        <Grid container spacing={3} key={`podcast-row-${podcast.id}`}>
+          <Grid item key={`podcast-col-${podcast.id}`}>
+            <Card key={podcast.id} id={`podcast-${podcast.id}`}>
+              <CardHeader
+                title={podcast.title}
+                action={
+                  <IconButton onClick={handleCardMenuOpen}>
+                    <MoreVertIcon />
+                  </IconButton>
+                }
+              />
+              <CardContent>
+                <Grid container>
+                  <Grid item xs={2}>
+                    <img src={podcast.image} height="150" width="150" />
+                  </Grid>
+                  <Grid item xs={10}>
+                    <Typography variant="body2">
+                      {podcast.description}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </CardContent>
+              <CardActions>
+                <IconButton>
+                  <FavoriteIcon />
+                </IconButton>
+                <IconButton
+                  className={clsx(classes.expand, {
+                    [classes.expandOpen]: expanded,
+                  })}
+                  onClick={handleExpandClick}
+                >
+                  <ExpandMoreIcon />
+                </IconButton>
+              </CardActions>
+              <Collapse in={expanded} unmountOnExit>
+                <CardContent>
+                  <Typography>Episodes</Typography>
+                  <EpisodeList episodes={podcast.episodes} />
+                </CardContent>
+              </Collapse>
+            </Card>
+          </Grid>
+        </Grid>
       </Zoom>
 
       <Menu

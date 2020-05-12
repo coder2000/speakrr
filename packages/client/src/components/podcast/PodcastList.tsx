@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { PageInfo, Podcast } from '../../interfaces';
-import { Grid } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { PodcastCard } from './PodcastCard';
 
 interface PodcastEdge {
@@ -60,14 +60,16 @@ export function PodcastList() {
         <h3>Loading...</h3>
       ) : (
         <>
-          {data &&
+          {data ? (
             data.podcasts.edges.map((edge) => (
-              <Grid container spacing={3} key={`podcast-row-${edge.node.id}`}>
-                <Grid item key={`podcast-col-${edge.node.id}`}>
-                  <PodcastCard podcast={edge.node} />
-                </Grid>
-              </Grid>
-            ))}
+              <PodcastCard podcast={edge.node} />
+            ))
+          ) : (
+            <>
+              <Typography variant="h5">No Podcasts</Typography>
+              <Typography>Add a podcast using the button below.</Typography>
+            </>
+          )}
         </>
       )}
     </>
