@@ -1,11 +1,9 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity } from './base.entity';
 import { PodcastEntity } from './podcast.entity';
 
 @Entity('episode')
-export class EpisodeEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class EpisodeEntity extends BaseEntity {
   @Column()
   title: string;
 

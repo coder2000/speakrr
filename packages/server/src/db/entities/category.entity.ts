@@ -1,17 +1,9 @@
-import {
-  Column,
-  Entity,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-  JoinTable,
-} from 'typeorm';
+import { Column, Entity, ManyToMany, JoinTable } from 'typeorm';
+import { BaseEntity } from './base.entity';
 import { PodcastEntity } from './podcast.entity';
 
 @Entity('category')
-export class CategoryEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class CategoryEntity extends BaseEntity {
   @Column()
   name: string;
 

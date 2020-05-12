@@ -1,11 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { FilterableField } from '@nestjs-query/query-graphql';
 import { Field, ObjectType } from '@nestjs/graphql';
+import { BaseEntity } from './base.entity';
 
 @Entity('queue')
 @ObjectType('Queue')
-export class QueueEntity {
-  @PrimaryGeneratedColumn()
+export class QueueEntity extends BaseEntity {
   @FilterableField()
   id: number;
 

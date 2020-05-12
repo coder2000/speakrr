@@ -1,12 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 
+import { BaseEntity } from './base.entity';
 import { PodcastEntity } from './podcast.entity';
 
 @Entity('author')
-export class AuthorEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class AuthorEntity extends BaseEntity {
   @Column()
   name: string;
 

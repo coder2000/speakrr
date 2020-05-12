@@ -1,22 +1,11 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
+import { BaseEntity } from './base.entity';
 import { AuthorEntity } from './author.entity';
 import { EpisodeEntity } from './episode.entity';
 import { CategoryEntity } from './category.entity';
 
 @Entity('podcast')
-export class PodcastEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class PodcastEntity extends BaseEntity {
   @Column()
   title: string;
 
@@ -43,12 +32,6 @@ export class PodcastEntity {
 
   @ManyToMany(() => CategoryEntity, (category) => category.podcasts)
   categories: CategoryEntity[];
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 
   @Column({ nullable: true })
   authorId: number;
