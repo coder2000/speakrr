@@ -1,16 +1,27 @@
 {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": "./packages/server/tsconfig.json",
+    "project": ["./packages/*/tsconfig.json"],
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint/eslint-plugin", "import", "sonarjs"],
+  "plugins": [
+    "@typescript-eslint/eslint-plugin",
+    "import",
+    "react",
+    "react-hooks",
+    "jsx",
+    "jsx-a11y",
+    "sonarjs",
+    "prettier"
+  ],
   "extends": [
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "prettier/@typescript-eslint",
-    "plugin:sonarjs/recommended"
+    "plugin:prettier/recommended",
+    "plugin:prettier/@typescript-eslint",
+    "plugin:prettier/react",
+    "plugin:sonarjs/recommended",
+    "airbnb-typescript"
   ],
   "root": true,
   "env": {
