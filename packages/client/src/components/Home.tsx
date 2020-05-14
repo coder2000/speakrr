@@ -1,7 +1,7 @@
-import React from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { AppBar, Container, Toolbar, Typography } from '@material-ui/core';
-import { AddPodcastFab, PodcastList } from './podcast';
+import React from "react";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import { AppBar, Container, Toolbar, Typography } from "@material-ui/core";
+import { AddPodcastFab, PodcastList } from "./podcast";
 
 const useStyles = makeStyles((theme: Theme) => ({
   appbar: {
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export function Home() {
+export default function Home() {
   const classes = useStyles();
 
   return (

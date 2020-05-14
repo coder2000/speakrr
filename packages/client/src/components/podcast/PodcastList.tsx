@@ -1,13 +1,13 @@
-import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
-import { PageInfo, Podcast } from '../../interfaces';
-import { Typography } from '@material-ui/core';
-import { PodcastCard } from './PodcastCard';
+import React from "react";
+import { useQuery } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
+import { Typography } from "@material-ui/core";
+import { PageInfo, Podcast } from "../../interfaces";
+import PodcastCard from "./PodcastCard";
 
 interface PodcastEdge {
   node: Podcast;
-  cursor: String;
+  cursor: string;
 }
 
 interface PodcastConnection {
@@ -51,7 +51,7 @@ const GET_PODCASTS = gql`
   }
 `;
 
-export function PodcastList() {
+export default function PodcastList() {
   const { loading, data } = useQuery<Podcasts>(GET_PODCASTS);
 
   return (

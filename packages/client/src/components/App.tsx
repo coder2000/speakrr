@@ -1,13 +1,13 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from '@apollo/react-hooks';
-import { CssBaseline } from '@material-ui/core';
-import { Home } from './Home';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "@apollo/react-hooks";
+import { CssBaseline } from "@material-ui/core";
+import Home from "./Home";
 
-export function App() {
+export default function App() {
   const client = new ApolloClient({
-    uri: 'http://localhost:3000/graphql',
+    uri: "http://localhost:3000/graphql",
   });
 
   return (

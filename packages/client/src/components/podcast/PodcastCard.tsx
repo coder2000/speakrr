@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -12,31 +12,31 @@ import {
   ListItemIcon,
   Zoom,
   Collapse,
-} from '@material-ui/core';
+} from "@material-ui/core";
 import {
   Delete as DeleteIcon,
   Edit as EditIcon,
   ExpandMore as ExpandMoreIcon,
   Favorite as FavoriteIcon,
   MoreVert as MoreVertIcon,
-} from '@material-ui/icons';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import { Podcast } from '../../interfaces';
-import { gql } from 'apollo-boost';
-import { useMutation } from '@apollo/react-hooks';
-import { EpisodeList } from '../episodes';
+} from "@material-ui/icons";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import clsx from "clsx";
+import { gql } from "apollo-boost";
+import { useMutation } from "@apollo/react-hooks";
+import { Podcast } from "../../interfaces";
+import EpisodeList from "../episodes";
 
 interface PodcastProps {
   podcast: Podcast;
 }
 
 interface DeleteOneInput {
-  id: Number;
+  id: number;
 }
 
 interface DeleteResponse {
-  id: Number;
+  id: number;
 }
 
 const DELETE_PODCAST = gql`
@@ -49,23 +49,23 @@ const DELETE_PODCAST = gql`
 
 const useStyles = makeStyles((theme: Theme) => ({
   expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto !important',
-    transition: theme.transitions.create('transform', {
+    transform: "rotate(0deg)",
+    marginLeft: "auto !important",
+    transition: theme.transitions.create("transform", {
       duration: theme.transitions.duration.shortest,
     }),
   },
   expandOpen: {
-    transform: 'rotate(180deg)',
+    transform: "rotate(180deg)",
   },
 }));
 
-export function PodcastCard(props: PodcastProps) {
+export default function PodcastCard(props: PodcastProps) {
   const { podcast } = props;
   const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
   const [visible, setVisible] = useState(true);
   const [expanded, setExpanded] = useState(false);
-  const [deletePodcast, {}] = useMutation<
+  const [deletePodcast] = useMutation<
     { deleteOnePodcast: DeleteResponse },
     { input: DeleteOneInput }
   >(DELETE_PODCAST);
@@ -109,7 +109,12 @@ export function PodcastCard(props: PodcastProps) {
               <CardContent>
                 <Grid container>
                   <Grid item xs={2}>
-                    <img src={podcast.image} height="150" width="150" />
+                    <img
+                      src={podcast.image}
+                      height="150"
+                      width="150"
+                      alt="podcast logo"
+                    />
                   </Grid>
                   <Grid item xs={10}>
                     <Typography variant="body2">
@@ -144,7 +149,7 @@ export function PodcastCard(props: PodcastProps) {
 
       <Menu
         anchorEl={anchorElement}
-        keepMounted={true}
+        keepMounted
         open={Boolean(anchorElement)}
         onClose={handleCardMenuClose}
         id={`podcast-menu-${podcast.id}`}

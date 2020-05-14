@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Fab,
   Dialog,
@@ -7,26 +7,26 @@ import {
   DialogContent,
   DialogActions,
   Button,
-} from '@material-ui/core';
-import { Add as AddIcon } from '@material-ui/icons';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { useForm } from 'react-hook-form';
-import { gql } from 'apollo-boost';
-import { useMutation } from '@apollo/react-hooks';
+} from "@material-ui/core";
+import { Add as AddIcon } from "@material-ui/icons";
+import { makeStyles } from "@material-ui/core/styles";
+import { useForm } from "react-hook-form";
+import { gql } from "apollo-boost";
+import { useMutation } from "@apollo/react-hooks";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   fab: {
     margin: 0,
-    top: 'auto',
-    left: 'auto',
+    top: "auto",
+    left: "auto",
     bottom: 20,
     right: 20,
-    position: 'fixed',
+    position: "fixed",
   },
 }));
 
 type FormData = {
-  podcastUrl: String;
+  podcastUrl: string;
 };
 
 const ADD_PODCAST = gql`
@@ -38,18 +38,18 @@ const ADD_PODCAST = gql`
 `;
 
 interface Queue {
-  url: String;
+  url: string;
 }
 
 interface CreateOneQueueInput {
   queue: Queue;
 }
 
-export function AddPodcastFab() {
+export default function AddPodcastFab() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const { register, handleSubmit } = useForm<FormData>();
-  const [addPodcast, {}] = useMutation<
+  const [addPodcast] = useMutation<
     { createOneQueue: Queue },
     { input: CreateOneQueueInput }
   >(ADD_PODCAST);

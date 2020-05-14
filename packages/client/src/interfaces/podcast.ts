@@ -1,4 +1,4 @@
-import { EpisodeConnection } from './episode';
+import { EpisodeConnection } from "./episode";
 
 export interface Podcast {
   id: number;

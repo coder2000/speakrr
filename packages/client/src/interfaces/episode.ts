@@ -1,4 +1,4 @@
-import { PageInfo } from './pageinfo';
+import { PageInfo } from "./pageinfo";
 
 export interface Episode {
   id: number;
