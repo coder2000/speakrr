@@ -40,7 +40,7 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
   async parseFromQueue() {
     this.logger.info('Starting parsing for next podcast.');
 
-    var next: QueueEntity[] = await this.queueService.query({
+    const next: QueueEntity[] = await this.queueService.query({
       filter: {
         or: [{ completed: { is: false } }, { completed: { is: null } }],
       },
@@ -56,11 +56,11 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
     next.forEach(async (cast) => {
       this.logger.info('Parsing %s ...', cast.url);
 
-      var podcast: PodcastEntity = await this.query({
+      let podcast: PodcastEntity = await this.query({
         filter: { link: { eq: cast.url } },
       })[0];
 
-      var data: Parser.Output = await this.rss
+      const data: Parser.Output = await this.rss
         .parseURL(cast.url)
         .catch((error) => {
           this.logger.error(error.message);
@@ -78,7 +78,7 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
         podcast = new PodcastEntity();
       }
 
-      var author = await this.authorService.findOrCreate(data.itunes.author);
+      const author = await this.authorService.findOrCreate(data.itunes.author);
 
       podcast.title = data.title;
       podcast.image = data.image.url;
@@ -88,10 +88,10 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
       podcast.explicit = data.itunes.explicit === 'true' ? true : false;
       podcast.author = author;
 
-      podcast.episodes = new Array();
+      podcast.episodes = [];
 
       data.items.forEach(async (item) => {
-        var episode = await this.episodeService.create(item);
+        const episode = await this.episodeService.create(item);
         podcast.episodes.push(episode);
       });
 

@@ -15,7 +15,7 @@ export class EpisodeService extends TypeOrmQueryService<EpisodeEntity> {
   }
 
   async create(item: Item): Promise<EpisodeEntity> {
-    var episode = new EpisodeEntity();
+    const episode = new EpisodeEntity();
 
     episode.title = item.title;
     episode.publication = new Date(item.pubDate);
