@@ -1,16 +1,13 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "commonjs",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es2017",
-    "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./src",
     "incremental": true,
-    "esModuleInterop": true,
     "paths": {
       "@dto/*": ["db/dto/*"],
       "@entities/*": ["db/entities/*"],

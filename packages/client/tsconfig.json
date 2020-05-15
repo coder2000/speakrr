@@ -1,18 +1,13 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../server/dist/client",
-    "sourceMap": true,
-    "strict": true,
     "noImplicitReturns": true,
     "noImplicitAny": true,
-    "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es5",
     "allowJs": true,
     "jsx": "react",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": "src/"
+    "baseUrl": "./src"
   },
   "exclude": ["node_modules"]
 }
