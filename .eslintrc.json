@@ -20,8 +20,8 @@
     "plugin:prettier/recommended",
     "plugin:prettier/@typescript-eslint",
     "plugin:prettier/react",
-    "plugin:sonarjs/recommended",
-    "airbnb-typescript"
+    "airbnb-typescript",
+    "plugin:sonarjs/recommended"
   ],
   "root": true,
   "env": {
