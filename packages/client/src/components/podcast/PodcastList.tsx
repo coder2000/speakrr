@@ -51,7 +51,7 @@ const GET_PODCASTS = gql`
   }
 `;
 
-export default function PodcastList() {
+export function PodcastList() {
   const { loading, data } = useQuery<Podcasts>(GET_PODCASTS);
 
   return (

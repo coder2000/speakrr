@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Logger, QueryRunner } from 'typeorm';
 import { PinoLogger } from 'nestjs-pino';
 
 export class TypeOrmPinoLogger implements Logger {
   constructor(private readonly logger: PinoLogger) {}
 
-  logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {
+  logQuery(query: string, parameters?: any[], _queryRunner?: QueryRunner) {
     const sql =
       query +
       (parameters && parameters.length
-        ? ` -- PARAMETERS: ${this.stringifyParams(parameters)}`
+        ? ` -- PARAMETERS: ${TypeOrmPinoLogger.stringifyParams(parameters)}`
         : '');
     this.logger.debug(sql);
   }
@@ -17,12 +18,12 @@ export class TypeOrmPinoLogger implements Logger {
     error: string,
     query: string,
     parameters?: any[],
-    queryRunner?: QueryRunner
+    queryRunner?: QueryRunner,
   ) {
     const sql =
       query +
       (parameters && parameters.length
-        ? ` -- PARAMETERS: ${this.stringifyParams(parameters)}`
+        ? ` -- PARAMETERS: ${TypeOrmPinoLogger.stringifyParams(parameters)}`
         : '');
     this.logger.error(sql);
   }
@@ -31,12 +32,12 @@ export class TypeOrmPinoLogger implements Logger {
     time: number,
     query: string,
     parameters?: any[],
-    queryRunner?: QueryRunner
+    queryRunner?: QueryRunner,
   ) {
     const sql =
       query +
       (parameters && parameters.length
-        ? ` -- PARAMETERS: ${this.stringifyParams(parameters)}`
+        ? ` -- PARAMETERS: ${TypeOrmPinoLogger.stringifyParams(parameters)}`
         : '');
     this.logger.info(sql);
   }
@@ -58,10 +59,12 @@ export class TypeOrmPinoLogger implements Logger {
       case 'warn':
         this.logger.warn(message);
         break;
+      default:
+        break;
     }
   }
 
-  protected stringifyParams(parameters: any[]) {
+  protected static stringifyParams(parameters: any[]) {
     try {
       return JSON.stringify(parameters);
     } catch (error) {

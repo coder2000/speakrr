@@ -19,6 +19,7 @@
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
+    "prettier",
     "prettier/@typescript-eslint",
     "prettier/react",
     "airbnb-typescript",
@@ -36,9 +37,6 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/indent": "off",
     "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
-    "react/jsx-wrap-multilines": [
-      "error",
-      { "declaration": false, "assignment": false }
-    ]
+    "react/jsx-wrap-multilines": ["error", { "declaration": false, "assignment": false }]
   }
 }

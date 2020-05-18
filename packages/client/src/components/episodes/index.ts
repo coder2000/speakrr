@@ -1,3 +1,1 @@
-import EpisodeList from './EpisodeList';
-
-export default EpisodeList;
+export { EpisodeList } from './EpisodeList';

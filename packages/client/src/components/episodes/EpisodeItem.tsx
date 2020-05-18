@@ -7,7 +7,7 @@ interface EpisodeItemProps {
   episode: Episode;
 }
 
-export default function EpisodeItem(props: EpisodeItemProps) {
+export function EpisodeItem(props: EpisodeItemProps) {
   const { episode } = props;
 
   return (

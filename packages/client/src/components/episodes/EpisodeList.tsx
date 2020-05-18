@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, GridProps } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { EpisodeConnection } from '../../interfaces';
-import EpisodeItem from './EpisodeItem';
+import { EpisodeItem } from './EpisodeItem';
 
 interface EpisodeListProps {
   episodes: EpisodeConnection;
@@ -45,7 +45,7 @@ function GridBackground(props: StyleProps & Omit<GridProps, keyof StyleProps>) {
   );
 }
 
-export default function EpisodeList(props: EpisodeListProps) {
+export function EpisodeList(props: EpisodeListProps) {
   const { episodes } = props;
 
   return (

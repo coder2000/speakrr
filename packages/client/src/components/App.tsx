@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { CssBaseline } from '@material-ui/core';
-import Home from './Home';
+import { Home } from './Home';
 
 export default function App() {
   const client = new ApolloClient({

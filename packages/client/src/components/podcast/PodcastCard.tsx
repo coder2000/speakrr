@@ -25,7 +25,7 @@ import clsx from 'clsx';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import { Podcast } from '../../interfaces';
-import EpisodeList from '../episodes';
+import { EpisodeList } from '../episodes';
 
 interface PodcastProps {
   podcast: Podcast;
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function PodcastCard(props: PodcastProps) {
+export function PodcastCard(props: PodcastProps) {
   const { podcast } = props;
   const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
   const [visible, setVisible] = useState(true);

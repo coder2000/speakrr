@@ -45,7 +45,7 @@ interface CreateOneQueueInput {
   queue: Queue;
 }
 
-export default function AddPodcastFab() {
+export function AddPodcastFab() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const { register, handleSubmit } = useForm<FormData>();
