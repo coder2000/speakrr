@@ -13,9 +13,11 @@ import { AuthorService } from './author.service';
         {
           DTOClass: AuthorDto,
           EntityClass: AuthorEntity,
+          ServiceClass: AuthorService,
           create: { disabled: true },
         },
       ],
+      services: [AuthorService],
     }),
   ],
   providers: [AuthorService],

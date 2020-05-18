@@ -19,10 +19,10 @@ export class EpisodeService extends TypeOrmQueryService<EpisodeEntity> {
 
     episode.title = item.title;
     episode.publication = new Date(item.pubDate);
-    episode.url = item.enclosure.url;
-    episode.filesize = item.enclosure.length;
+    episode.url = item.enclosure?.url;
+    episode.filesize = item.enclosure?.length;
     episode.guid = item.guid;
-    episode.type = item.enclosure.type;
+    episode.type = item.enclosure?.type;
     episode.description = item.content;
     episode.image = item.itunes.image;
     episode.explicit = item.itunes.explicit === 'clean';

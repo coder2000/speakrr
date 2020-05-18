@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-useless-constructor */
 import { QueryService } from '@nestjs-query/core';
 import { TypeOrmQueryService } from '@nestjs-query/query-typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,12 +9,18 @@ import { AuthorEntity } from '@entities/author.entity';
 @QueryService(AuthorEntity)
 export class AuthorService extends TypeOrmQueryService<AuthorEntity> {
   constructor(
-    @InjectRepository(AuthorEntity) authorRepository: Repository<AuthorEntity>
+    @InjectRepository(AuthorEntity) authorRepository: Repository<AuthorEntity>,
   ) {
     super(authorRepository);
   }
 
-  async findOrCreate(name: string): Promise<AuthorEntity> {
+  async findOrCreate(
+    name: string | undefined,
+  ): Promise<AuthorEntity | undefined> {
+    if (!name) {
+      return undefined;
+    }
+
     const authors: AuthorEntity[] = await this.query({
       filter: { name: { eq: name } },
     });

@@ -12,9 +12,11 @@ import { QueueService } from './queue.service';
         {
           DTOClass: QueueEntity,
           EntityClass: QueueEntity,
+          ServiceClass: QueueService,
           update: { disabled: true },
         },
       ],
+      services: [QueueService],
     }),
   ],
   providers: [QueueService],

@@ -13,9 +13,11 @@ import { EpisodeService } from './episode.service';
         {
           DTOClass: EpisodeDto,
           EntityClass: EpisodeEntity,
+          ServiceClass: EpisodeService,
           create: { disabled: true },
         },
       ],
+      services: [EpisodeService],
     }),
   ],
   providers: [EpisodeService],
