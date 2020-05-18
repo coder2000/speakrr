@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { Field, ObjectType } from '@nestjs/graphql';
 import {
   Connection as Many,
@@ -14,26 +15,26 @@ import { EpisodeDto } from './episode.dto';
 @Many('episodes', () => EpisodeDto, { disableUpdate: true })
 export class PodcastDto {
   @FilterableField()
-  id: number;
+  id!: number;
 
   @FilterableField()
-  title: string;
+  title!: string;
 
   @Field()
-  description: string;
+  description!: string;
 
   @Field()
-  image: string;
+  image!: string;
 
   @Field()
-  language: string;
+  language!: string;
 
   @Field()
-  link: string;
+  link!: string;
 
   @FilterableField()
-  explicit: boolean;
+  explicit!: boolean;
 
   @FilterableField()
-  authorId: number;
+  authorId!: number;
 }

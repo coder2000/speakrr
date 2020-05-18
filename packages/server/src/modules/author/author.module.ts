@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { AuthorEntity } from '@entities/author.entity';
-import { AuthorService } from './author.service';
 import { AuthorDto } from '@dto/author.dto';
+import { AuthorService } from './author.service';
 
 @Module({
   imports: [

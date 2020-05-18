@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { Field, ObjectType, GraphQLISODateTime } from '@nestjs/graphql';
 import { FilterableField, Relation as One } from '@nestjs-query/query-graphql';
 import { PodcastDto } from './podcast.dto';
@@ -6,38 +7,38 @@ import { PodcastDto } from './podcast.dto';
 @One('podcast', () => PodcastDto, { disableUpdate: true })
 export class EpisodeDto {
   @FilterableField()
-  id: number;
+  id!: number;
 
   @Field()
-  title: string;
+  title!: string;
 
   @Field()
-  description: string;
+  description!: string;
 
   @Field()
-  url: string;
+  url!: string;
 
   @Field({ nullable: true })
-  image: string;
+  image!: string;
 
   @Field()
-  type: string;
+  type!: string;
 
   @Field()
-  filesize: number;
+  filesize!: number;
 
   @FilterableField()
-  explicit: boolean;
+  explicit!: boolean;
 
   @Field()
-  guid: string;
+  guid!: string;
 
   @Field()
-  duration: string;
+  duration!: string;
 
   @Field(() => GraphQLISODateTime)
-  publication: Date;
+  publication!: Date;
 
   @FilterableField()
-  podcastId: number;
+  podcastId!: number;
 }

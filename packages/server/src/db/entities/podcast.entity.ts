@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { Column, Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { AuthorEntity } from './author.entity';
@@ -7,32 +8,32 @@ import { CategoryEntity } from './category.entity';
 @Entity('podcast')
 export class PodcastEntity extends BaseEntity {
   @Column()
-  title: string;
+  title!: string;
 
   @Column()
-  description: string;
+  description!: string;
 
   @Column()
-  image: string;
+  image!: string;
 
   @Column()
-  language: string;
+  language!: string;
 
   @Column()
-  link: string;
+  link!: string;
 
   @Column()
-  explicit: boolean;
+  explicit!: boolean;
 
   @ManyToOne(() => AuthorEntity, (author) => author.podcasts)
-  author: AuthorEntity;
+  author!: AuthorEntity;
 
   @OneToMany(() => EpisodeEntity, (episode) => episode.podcast)
-  episodes: EpisodeEntity[];
+  episodes!: EpisodeEntity[];
 
   @ManyToMany(() => CategoryEntity, (category) => category.podcasts)
-  categories: CategoryEntity[];
+  categories!: CategoryEntity[];
 
   @Column({ nullable: true })
-  authorId: number;
+  authorId?: number;
 }

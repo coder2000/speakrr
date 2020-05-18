@@ -25,7 +25,7 @@ export class EpisodeService extends TypeOrmQueryService<EpisodeEntity> {
     episode.type = item.enclosure.type;
     episode.description = item.content;
     episode.image = item.itunes.image;
-    episode.explicit = item.itunes.explicit == 'clean' ? true : false;
+    episode.explicit = item.itunes.explicit === 'clean';
     episode.duration = item.itunes.duration;
 
     return this.episodeRepository.save(episode);

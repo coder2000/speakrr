@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { Field, ObjectType } from '@nestjs/graphql';
 import {
   Connection as Many,
@@ -12,8 +13,8 @@ import { PodcastDto } from './podcast.dto';
 })
 export class AuthorDto {
   @FilterableField()
-  id: number;
+  id!: number;
 
   @Field()
-  name: string;
+  name!: string;
 }

@@ -7,11 +7,11 @@ import { BaseEntity } from './base.entity';
 @ObjectType('Queue')
 export class QueueEntity extends BaseEntity {
   @FilterableField()
-  id: number;
+  id!: number;
 
   @Column()
   @Field()
-  url: string;
+  url!: string;
 
   @Column({ nullable: true, default: false })
   @FilterableField({ nullable: true })

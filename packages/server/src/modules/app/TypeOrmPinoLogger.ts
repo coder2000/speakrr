@@ -8,7 +8,7 @@ export class TypeOrmPinoLogger implements Logger {
     const sql =
       query +
       (parameters && parameters.length
-        ? ' -- PARAMETERS: ' + this.stringifyParams(parameters)
+        ? ` -- PARAMETERS: ${this.stringifyParams(parameters)}`
         : '');
     this.logger.debug(sql);
   }
@@ -17,12 +17,12 @@ export class TypeOrmPinoLogger implements Logger {
     error: string,
     query: string,
     parameters?: any[],
-    queryRunner?: QueryRunner,
+    queryRunner?: QueryRunner
   ) {
     const sql =
       query +
       (parameters && parameters.length
-        ? ' -- PARAMETERS: ' + this.stringifyParams(parameters)
+        ? ` -- PARAMETERS: ${this.stringifyParams(parameters)}`
         : '');
     this.logger.error(sql);
   }
@@ -31,12 +31,12 @@ export class TypeOrmPinoLogger implements Logger {
     time: number,
     query: string,
     parameters?: any[],
-    queryRunner?: QueryRunner,
+    queryRunner?: QueryRunner
   ) {
     const sql =
       query +
       (parameters && parameters.length
-        ? ' -- PARAMETERS: ' + this.stringifyParams(parameters)
+        ? ` -- PARAMETERS: ${this.stringifyParams(parameters)}`
         : '');
     this.logger.info(sql);
   }

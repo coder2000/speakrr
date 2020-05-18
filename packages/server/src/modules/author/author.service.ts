@@ -8,7 +8,7 @@ import { AuthorEntity } from '@entities/author.entity';
 @QueryService(AuthorEntity)
 export class AuthorService extends TypeOrmQueryService<AuthorEntity> {
   constructor(
-    @InjectRepository(AuthorEntity) authorRepository: Repository<AuthorEntity>,
+    @InjectRepository(AuthorEntity) authorRepository: Repository<AuthorEntity>
   ) {
     super(authorRepository);
   }
@@ -21,9 +21,9 @@ export class AuthorService extends TypeOrmQueryService<AuthorEntity> {
     let author: AuthorEntity;
 
     if (authors.length <= 0) {
-      author = await this.createOne({ name: name });
+      author = await this.createOne({ name });
     } else {
-      author = authors[0];
+      [author] = authors;
     }
 
     return author;

@@ -1,42 +1,43 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+/* eslint-disable import/no-cycle */
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { PodcastEntity } from './podcast.entity';
 
 @Entity('episode')
 export class EpisodeEntity extends BaseEntity {
   @Column()
-  title: string;
+  title!: string;
 
   @Column()
-  description: string;
+  description!: string;
 
   @Column()
-  url: string;
+  url!: string;
 
   @Column({ nullable: true })
-  image: string;
+  image?: string;
 
   @Column()
-  type: string;
+  type!: string;
 
   @Column()
-  filesize: number;
+  filesize!: number;
 
   @Column()
-  explicit: boolean;
+  explicit!: boolean;
 
   @Column()
-  guid: string;
+  guid!: string;
 
   @Column()
-  duration: string;
+  duration!: string;
 
   @Column()
-  publication: Date;
+  publication!: Date;
 
   @ManyToOne(() => PodcastEntity, (podcast) => podcast.episodes)
-  podcast: PodcastEntity;
+  podcast!: PodcastEntity;
 
   @Column({ nullable: true })
-  podcastId: number;
+  podcastId?: number;
 }

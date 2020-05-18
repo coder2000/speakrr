@@ -6,9 +6,9 @@ import { LoggerModule } from 'nestjs-pino';
 import { QueueModule } from '@modules/queue';
 import { AuthorModule } from '@modules/author';
 import { EpisodeModule } from '@modules/episode';
-import { PodcastService } from './podcast.service';
 import { PodcastEntity } from '@entities/podcast.entity';
 import { PodcastDto } from '@dto/podcast.dto';
+import { PodcastService } from './podcast.service';
 
 @Module({
   imports: [

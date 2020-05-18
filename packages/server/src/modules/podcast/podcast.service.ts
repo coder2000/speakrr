@@ -56,11 +56,13 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
     next.forEach(async (cast) => {
       this.logger.info('Parsing %s ...', cast.url);
 
-      let podcast: PodcastEntity = await this.query({
-        filter: { link: { eq: cast.url } },
-      })[0];
+      let podcast: PodcastEntity;
 
-      const data: Parser.Output = await this.rss
+      [podcast] = await this.query({
+        filter: { link: { eq: cast.url } },
+      });
+
+      const data: Parser.Output | null = await this.rss
         .parseURL(cast.url)
         .catch((error) => {
           this.logger.error(error.message);
@@ -78,19 +80,19 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
         podcast = new PodcastEntity();
       }
 
-      const author = await this.authorService.findOrCreate(data.itunes.author);
+      const author = await this.authorService.findOrCreate(data.itunes?.author);
 
       podcast.title = data.title;
-      podcast.image = data.image.url;
+      podcast.image = data.image?.url;
       podcast.description = data.description;
       podcast.link = data.feedUrl;
       podcast.language = data.language;
-      podcast.explicit = data.itunes.explicit === 'true' ? true : false;
+      podcast.explicit = data.itunes?.explicit === 'true';
       podcast.author = author;
 
       podcast.episodes = [];
 
-      data.items.forEach(async (item) => {
+      data.items?.forEach(async (item) => {
         const episode = await this.episodeService.create(item);
         podcast.episodes.push(episode);
       });
