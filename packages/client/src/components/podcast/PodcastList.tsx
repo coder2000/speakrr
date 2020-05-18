@@ -1,9 +1,9 @@
-import React from "react";
-import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-import { Typography } from "@material-ui/core";
-import { PageInfo, Podcast } from "../../interfaces";
-import PodcastCard from "./PodcastCard";
+import React from 'react';
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+import { Typography } from '@material-ui/core';
+import { PageInfo, Podcast } from '../../interfaces';
+import PodcastCard from './PodcastCard';
 
 interface PodcastEdge {
   node: Podcast;

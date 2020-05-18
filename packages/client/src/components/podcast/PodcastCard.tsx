@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Card,
   CardHeader,
@@ -12,20 +12,20 @@ import {
   ListItemIcon,
   Zoom,
   Collapse,
-} from "@material-ui/core";
+} from '@material-ui/core';
 import {
   Delete as DeleteIcon,
   Edit as EditIcon,
   ExpandMore as ExpandMoreIcon,
   Favorite as FavoriteIcon,
   MoreVert as MoreVertIcon,
-} from "@material-ui/icons";
-import { makeStyles, Theme } from "@material-ui/core/styles";
-import clsx from "clsx";
-import { gql } from "apollo-boost";
-import { useMutation } from "@apollo/react-hooks";
-import { Podcast } from "../../interfaces";
-import EpisodeList from "../episodes";
+} from '@material-ui/icons';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import { gql } from 'apollo-boost';
+import { useMutation } from '@apollo/react-hooks';
+import { Podcast } from '../../interfaces';
+import EpisodeList from '../episodes';
 
 interface PodcastProps {
   podcast: Podcast;
@@ -49,14 +49,14 @@ const DELETE_PODCAST = gql`
 
 const useStyles = makeStyles((theme: Theme) => ({
   expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto !important",
-    transition: theme.transitions.create("transform", {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto !important',
+    transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
     }),
   },
   expandOpen: {
-    transform: "rotate(180deg)",
+    transform: 'rotate(180deg)',
   },
 }));
 

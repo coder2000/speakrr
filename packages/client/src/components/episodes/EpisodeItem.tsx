@@ -1,7 +1,7 @@
-import React from "react";
-import { Grid, Typography } from "@material-ui/core";
-import parse from "html-react-parser";
-import { Episode } from "../../interfaces";
+import React from 'react';
+import { Grid, Typography } from '@material-ui/core';
+import parse from 'html-react-parser';
+import { Episode } from '../../interfaces';
 
 interface EpisodeItemProps {
   episode: Episode;

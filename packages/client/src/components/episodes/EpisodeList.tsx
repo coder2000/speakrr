@@ -1,8 +1,8 @@
-import React from "react";
-import { Grid, GridProps } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { EpisodeConnection } from "../../interfaces";
-import EpisodeItem from "./EpisodeItem";
+import React from 'react';
+import { Grid, GridProps } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { EpisodeConnection } from '../../interfaces';
+import EpisodeItem from './EpisodeItem';
 
 interface EpisodeListProps {
   episodes: EpisodeConnection;
@@ -15,18 +15,18 @@ interface StyleProps {
 const useStyles = makeStyles(() => ({
   episode: {
     flexGrow: 1,
-    "&:before": {
-      content: " ",
-      display: "block",
-      position: "absolute",
+    '&:before': {
+      content: ' ',
+      display: 'block',
+      position: 'absolute',
       top: 0,
       left: 0,
-      height: "100%",
-      width: "100%",
+      height: '100%',
+      width: '100%',
       backgroundImage: (props: StyleProps) => `url(${props.backgroundImage})`,
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "cover",
-      backgroundPosition: "50% 0",
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+      backgroundPosition: '50% 0',
       opacity: 0.6,
       zIndex: 1,
     },
