@@ -19,11 +19,11 @@
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
-    "prettier",
     "prettier/@typescript-eslint",
     "prettier/react",
     "airbnb-typescript",
-    "plugin:sonarjs/recommended"
+    "plugin:sonarjs/recommended",
+    "prettier"
   ],
   "root": true,
   "env": {

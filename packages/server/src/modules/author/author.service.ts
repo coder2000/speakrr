@@ -8,19 +8,11 @@ import { AuthorEntity } from '@entities/author.entity';
 
 @QueryService(AuthorEntity)
 export class AuthorService extends TypeOrmQueryService<AuthorEntity> {
-  constructor(
-    @InjectRepository(AuthorEntity) authorRepository: Repository<AuthorEntity>,
-  ) {
+  constructor(@InjectRepository(AuthorEntity) authorRepository: Repository<AuthorEntity>) {
     super(authorRepository);
   }
 
-  async findOrCreate(
-    name: string | undefined,
-  ): Promise<AuthorEntity | undefined> {
-    if (!name) {
-      return undefined;
-    }
-
+  async findOrCreate(name: string | undefined): Promise<AuthorEntity> {
     const authors: AuthorEntity[] = await this.query({
       filter: { name: { eq: name } },
     });

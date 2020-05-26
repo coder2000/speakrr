@@ -79,8 +79,8 @@ export function PodcastCard(props: PodcastProps) {
     setAnchorElement(null);
   };
 
-  const handleDeleteClick = () => {
-    deletePodcast({
+  const handleDeleteClick = async () => {
+    await deletePodcast({
       variables: { input: { id: podcast.id } },
     });
 

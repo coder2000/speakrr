@@ -47,7 +47,7 @@ import { TypeOrmPinoLogger } from './TypeOrmPinoLogger';
       exclude: ['/graphql*'],
     }),
     GraphQLModule.forRoot({
-      autoSchemaFile: 'schema.gql',
+      autoSchemaFile: 'schema.graphql',
       debug: false,
       playground: false,
     }),

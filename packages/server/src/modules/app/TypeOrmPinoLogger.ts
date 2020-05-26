@@ -8,37 +8,21 @@ export class TypeOrmPinoLogger implements Logger {
   logQuery(query: string, parameters?: any[], _queryRunner?: QueryRunner) {
     const sql =
       query +
-      (parameters && parameters.length
-        ? ` -- PARAMETERS: ${TypeOrmPinoLogger.stringifyParams(parameters)}`
-        : '');
+      (parameters && parameters.length ? ` -- PARAMETERS: ${TypeOrmPinoLogger.stringifyParams(parameters)}` : '');
     this.logger.debug(sql);
   }
 
-  logQueryError(
-    error: string,
-    query: string,
-    parameters?: any[],
-    queryRunner?: QueryRunner,
-  ) {
+  logQueryError(error: string, query: string, parameters?: any[], queryRunner?: QueryRunner) {
     const sql =
       query +
-      (parameters && parameters.length
-        ? ` -- PARAMETERS: ${TypeOrmPinoLogger.stringifyParams(parameters)}`
-        : '');
+      (parameters && parameters.length ? ` -- PARAMETERS: ${TypeOrmPinoLogger.stringifyParams(parameters)}` : '');
     this.logger.error(sql);
   }
 
-  logQuerySlow(
-    time: number,
-    query: string,
-    parameters?: any[],
-    queryRunner?: QueryRunner,
-  ) {
+  logQuerySlow(time: number, query: string, parameters?: any[], queryRunner?: QueryRunner) {
     const sql =
       query +
-      (parameters && parameters.length
-        ? ` -- PARAMETERS: ${TypeOrmPinoLogger.stringifyParams(parameters)}`
-        : '');
+      (parameters && parameters.length ? ` -- PARAMETERS: ${TypeOrmPinoLogger.stringifyParams(parameters)}` : '');
     this.logger.info(sql);
   }
 

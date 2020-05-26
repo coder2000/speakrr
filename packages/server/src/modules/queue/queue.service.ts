@@ -7,9 +7,7 @@ import { QueueEntity } from '@entities/queue.entity';
 
 @QueryService(QueueEntity)
 export class QueueService extends TypeOrmQueryService<QueueEntity> {
-  constructor(
-    @InjectRepository(QueueEntity) queueRepository: Repository<QueueEntity>,
-  ) {
+  constructor(@InjectRepository(QueueEntity) queueRepository: Repository<QueueEntity>) {
     super(queueRepository);
   }
 }

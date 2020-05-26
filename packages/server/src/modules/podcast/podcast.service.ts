@@ -53,7 +53,7 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
       return;
     }
 
-    next.forEach(async (cast) => {
+    next.map(async (cast) => {
       this.logger.info('Parsing %s ...', cast.url);
 
       let podcast: PodcastEntity;
@@ -62,12 +62,10 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
         filter: { link: { eq: cast.url } },
       });
 
-      const data: Parser.Output | null = await this.rss
-        .parseURL(cast.url)
-        .catch((error) => {
-          this.logger.error(error.message);
-          return null;
-        });
+      const data: Parser.Output | null = await this.rss.parseURL(cast.url).catch((error) => {
+        this.logger.error(error.message);
+        return null;
+      });
 
       if (!data) {
         this.logger.info('Unable to process feed.');
@@ -82,25 +80,25 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
 
       const author = await this.authorService.findOrCreate(data.itunes?.author);
 
-      podcast.title = data.title;
-      podcast.image = data.image?.url;
-      podcast.description = data.description;
-      podcast.link = data.feedUrl;
+      podcast.title = data.title ? data.title : '';
+      podcast.image = data.image?.url ? data.image.url : '';
+      podcast.description = data.description ? data.description : '';
+      podcast.link = data.feedUrl ? data.feedUrl : '';
       podcast.language = data.language;
       podcast.explicit = data.itunes?.explicit === 'true';
       podcast.author = author;
 
       podcast.episodes = [];
 
-      data.items?.forEach(async (item) => {
+      data.items?.map(async (item) => {
         const episode = await this.episodeService.create(item);
         podcast.episodes.push(episode);
       });
 
-      this.podcastRepository.save(podcast);
+      await this.podcastRepository.save(podcast);
 
       this.logger.info('Completed parsing.');
-      this.queueService.updateOne(cast.id, { completed: true });
+      await this.queueService.updateOne(cast.id, { completed: true });
     });
   }
 }
