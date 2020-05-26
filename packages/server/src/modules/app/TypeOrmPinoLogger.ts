@@ -12,29 +12,29 @@ export class TypeOrmPinoLogger implements Logger {
     this.logger.debug(sql);
   }
 
-  logQueryError(error: string, query: string, parameters?: any[], queryRunner?: QueryRunner) {
+  logQueryError(_error: string, query: string, parameters?: any[], _queryRunner?: QueryRunner) {
     const sql =
       query +
       (parameters && parameters.length ? ` -- PARAMETERS: ${TypeOrmPinoLogger.stringifyParams(parameters)}` : '');
     this.logger.error(sql);
   }
 
-  logQuerySlow(time: number, query: string, parameters?: any[], queryRunner?: QueryRunner) {
+  logQuerySlow(_time: number, query: string, parameters?: any[], _queryRunner?: QueryRunner) {
     const sql =
       query +
       (parameters && parameters.length ? ` -- PARAMETERS: ${TypeOrmPinoLogger.stringifyParams(parameters)}` : '');
     this.logger.info(sql);
   }
 
-  logSchemaBuild(message: string, queryRunner?: QueryRunner) {
+  logSchemaBuild(message: string, _queryRunner?: QueryRunner) {
     this.logger.debug(message);
   }
 
-  logMigration(message: string, queryRunner?: QueryRunner) {
+  logMigration(message: string, _queryRunner?: QueryRunner) {
     this.logger.debug(message);
   }
 
-  log(level: 'log' | 'info' | 'warn', message: any, queryRunner?: QueryRunner) {
+  log(level: 'log' | 'info' | 'warn', message: any, _queryRunner?: QueryRunner) {
     switch (level) {
       case 'log':
       case 'info':
