@@ -19,10 +19,7 @@ import { TypeOrmPinoLogger } from './TypeOrmPinoLogger';
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRootAsync({
-      imports: [
-        LoggerModule.forRoot({ pinoHttp: { level: 'debug' } }),
-        ConfigModule,
-      ],
+      imports: [LoggerModule.forRoot({ pinoHttp: { level: 'debug' } }), ConfigModule],
       inject: [PinoLogger, ConfigService],
       useFactory: (logger: PinoLogger, config: ConfigService) => {
         logger.setContext('TypeOrm');

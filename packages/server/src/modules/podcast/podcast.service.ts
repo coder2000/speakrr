@@ -2,7 +2,7 @@ import Parser from 'rss-parser';
 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cron } from '@nestjs/schedule';
-import { QueryService } from '@nestjs-query/core';
+import { InjectQueryService, QueryService } from '@nestjs-query/core';
 import { TypeOrmQueryService } from '@nestjs-query/query-typeorm';
 import { PinoLogger } from 'nestjs-pino';
 import { Repository } from 'typeorm';
@@ -11,7 +11,6 @@ import { PodcastEntity } from '@entities/podcast.entity';
 import { QueueEntity } from '@entities/queue.entity';
 import { AuthorService } from '@modules/author';
 import { EpisodeService } from '@modules/episode';
-import { QueueService } from '@modules/queue';
 
 @QueryService(PodcastEntity)
 export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
@@ -20,7 +19,8 @@ export class PodcastService extends TypeOrmQueryService<PodcastEntity> {
   constructor(
     @InjectRepository(PodcastEntity)
     private podcastRepository: Repository<PodcastEntity>,
-    private queueService: QueueService,
+    @InjectQueryService(QueueEntity)
+    private queueService: QueryService<QueueEntity>,
     private authorService: AuthorService,
     private episodeService: EpisodeService,
     private readonly logger: PinoLogger,

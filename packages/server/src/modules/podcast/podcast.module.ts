@@ -3,31 +3,33 @@ import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { LoggerModule } from 'nestjs-pino';
 
-import { QueueModule } from '@modules/queue';
 import { AuthorModule } from '@modules/author';
 import { EpisodeModule } from '@modules/episode';
 import { PodcastEntity } from '@entities/podcast.entity';
 import { PodcastDto } from '@dto/podcast.dto';
+import { QueueEntity } from '@entities/queue.entity';
 import { PodcastService } from './podcast.service';
 
 @Module({
   imports: [
     NestjsQueryGraphQLModule.forFeature({
-      imports: [NestjsQueryTypeOrmModule.forFeature([PodcastEntity])],
+      imports: [
+        NestjsQueryTypeOrmModule.forFeature([PodcastEntity]),
+        NestjsQueryTypeOrmModule.forFeature([QueueEntity]),
+        AuthorModule,
+        EpisodeModule,
+      ],
       resolvers: [
         {
           DTOClass: PodcastDto,
           EntityClass: PodcastEntity,
+          ServiceClass: PodcastService,
           create: { disabled: true },
         },
       ],
+      services: [PodcastService],
     }),
     LoggerModule.forRoot(),
-    QueueModule,
-    AuthorModule,
-    EpisodeModule,
   ],
-  providers: [PodcastService],
-  exports: [PodcastService],
 })
 export class PodcastModule {}
