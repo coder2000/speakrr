@@ -1,0 +1,648 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Author {
+  id: Float!
+  name: String!
+  podcasts(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: PodcastFilter = {}
+
+    """Specify to sort results."""
+    sorting: [PodcastSort!] = []
+  ): PodcastConnection!
+}
+
+type AuthorConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [AuthorEdge!]!
+}
+
+type AuthorDeleteResponse {
+  id: Float
+  name: String
+}
+
+type AuthorEdge {
+  """The node containing the Author"""
+  node: Author!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+input AuthorFilter {
+  and: [AuthorFilter!]
+  or: [AuthorFilter!]
+  id: NumberFieldComparison
+}
+
+input AuthorSort {
+  field: AuthorSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum AuthorSortFields {
+  id
+}
+
+input BooleanFieldComparison {
+  is: Boolean
+  isNot: Boolean
+}
+
+type Category {
+  id: Float!
+  name: String!
+  podcasts(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: PodcastFilter = {}
+
+    """Specify to sort results."""
+    sorting: [PodcastSort!] = []
+  ): PodcastConnection!
+}
+
+type CategoryConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [CategoryEdge!]!
+}
+
+type CategoryDeleteResponse {
+  id: Float
+  name: String
+}
+
+type CategoryEdge {
+  """The node containing the Category"""
+  node: Category!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+input CategoryFilter {
+  and: [CategoryFilter!]
+  or: [CategoryFilter!]
+  id: NumberFieldComparison
+}
+
+input CategorySort {
+  field: CategorySortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum CategorySortFields {
+  id
+}
+
+"""Cursor for paging through collections"""
+scalar ConnectionCursor
+
+input CreateManyQueuesInput {
+  """Array of records to create"""
+  queues: [CreateQueue!]!
+}
+
+input CreateOneQueueInput {
+  """The record to create"""
+  queue: CreateQueue!
+}
+
+input CreateQueue {
+  id: Float
+  url: String
+  completed: Boolean
+}
+
+input CursorPaging {
+  """Paginate before opaque cursor"""
+  before: ConnectionCursor
+
+  """Paginate after opaque cursor"""
+  after: ConnectionCursor
+
+  """Paginate first"""
+  first: Int
+
+  """Paginate last"""
+  last: Int
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input DeleteManyAuthorsInput {
+  """Filter to find records to delete"""
+  filter: AuthorFilter!
+}
+
+input DeleteManyCategoriesInput {
+  """Filter to find records to delete"""
+  filter: CategoryFilter!
+}
+
+input DeleteManyEpisodesInput {
+  """Filter to find records to delete"""
+  filter: EpisodeFilter!
+}
+
+input DeleteManyPodcastsInput {
+  """Filter to find records to delete"""
+  filter: PodcastFilter!
+}
+
+input DeleteManyQueuesInput {
+  """Filter to find records to delete"""
+  filter: QueueFilter!
+}
+
+type DeleteManyResponse {
+  """The number of records deleted."""
+  deletedCount: Int!
+}
+
+input DeleteOneInput {
+  """The id of the record to delete."""
+  id: ID!
+}
+
+type Episode {
+  id: Float!
+  title: String!
+  description: String!
+  url: String!
+  image: String
+  type: String!
+  filesize: Float!
+  explicit: Boolean!
+  guid: String!
+  duration: String!
+  publication: DateTime!
+  podcastId: Float!
+  podcast: Podcast!
+}
+
+type EpisodeConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [EpisodeEdge!]!
+}
+
+type EpisodeDeleteResponse {
+  id: Float
+  title: String
+  description: String
+  url: String
+  image: String
+  type: String
+  filesize: Float
+  explicit: Boolean
+  guid: String
+  duration: String
+  publication: DateTime
+  podcastId: Float
+}
+
+type EpisodeEdge {
+  """The node containing the Episode"""
+  node: Episode!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+input EpisodeFilter {
+  and: [EpisodeFilter!]
+  or: [EpisodeFilter!]
+  id: NumberFieldComparison
+  explicit: BooleanFieldComparison
+  podcastId: NumberFieldComparison
+}
+
+input EpisodeSort {
+  field: EpisodeSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum EpisodeSortFields {
+  id
+  explicit
+  podcastId
+}
+
+type Mutation {
+  deleteOneAuthor(input: DeleteOneInput!): AuthorDeleteResponse!
+  deleteManyAuthors(input: DeleteManyAuthorsInput!): DeleteManyResponse!
+  updateOneAuthor(input: UpdateOneAuthorInput!): Author!
+  updateManyAuthors(input: UpdateManyAuthorsInput!): UpdateManyResponse!
+  deleteOneEpisode(input: DeleteOneInput!): EpisodeDeleteResponse!
+  deleteManyEpisodes(input: DeleteManyEpisodesInput!): DeleteManyResponse!
+  updateOneEpisode(input: UpdateOneEpisodeInput!): Episode!
+  updateManyEpisodes(input: UpdateManyEpisodesInput!): UpdateManyResponse!
+  removePodcastFromEpisode(input: RelationInput!): Episode!
+  deleteOnePodcast(input: DeleteOneInput!): PodcastDeleteResponse!
+  deleteManyPodcasts(input: DeleteManyPodcastsInput!): DeleteManyResponse!
+  updateOnePodcast(input: UpdateOnePodcastInput!): Podcast!
+  updateManyPodcasts(input: UpdateManyPodcastsInput!): UpdateManyResponse!
+  removeEpisodesFromPodcast(input: RelationsInput!): Podcast!
+  removeCategoriesFromPodcast(input: RelationsInput!): Podcast!
+  deleteOneCategory(input: DeleteOneInput!): CategoryDeleteResponse!
+  deleteManyCategories(input: DeleteManyCategoriesInput!): DeleteManyResponse!
+  updateOneCategory(input: UpdateOneCategoryInput!): Category!
+  updateManyCategories(input: UpdateManyCategoriesInput!): UpdateManyResponse!
+  removePodcastsFromCategory(input: RelationsInput!): Category!
+  deleteOneQueue(input: DeleteOneInput!): QueueDeleteResponse!
+  deleteManyQueues(input: DeleteManyQueuesInput!): DeleteManyResponse!
+  createOneQueue(input: CreateOneQueueInput!): Queue!
+  createManyQueues(input: CreateManyQueuesInput!): [Queue!]!
+}
+
+input NumberFieldComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: Float
+  neq: Float
+  gt: Float
+  gte: Float
+  lt: Float
+  lte: Float
+  in: [Float!]
+  notIn: [Float!]
+  between: NumberFieldComparisonBetween
+  notBetween: NumberFieldComparisonBetween
+}
+
+input NumberFieldComparisonBetween {
+  lower: Float!
+  upper: Float!
+}
+
+type PageInfo {
+  """true if paging forward and there are more records."""
+  hasNextPage: Boolean
+
+  """true if paging backwards and there are more records."""
+  hasPreviousPage: Boolean
+
+  """The cursor of the first returned record."""
+  startCursor: ConnectionCursor
+
+  """The cursor of the last returned record."""
+  endCursor: ConnectionCursor
+}
+
+type Podcast {
+  id: Float!
+  title: String!
+  description: String!
+  image: String!
+  language: String!
+  link: String!
+  explicit: Boolean!
+  authorId: Float!
+  episodes(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: EpisodeFilter = {}
+
+    """Specify to sort results."""
+    sorting: [EpisodeSort!] = []
+  ): EpisodeConnection!
+  categories(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: CategoryFilter = {}
+
+    """Specify to sort results."""
+    sorting: [CategorySort!] = []
+  ): CategoryConnection!
+  author: Author!
+}
+
+type PodcastConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [PodcastEdge!]!
+}
+
+type PodcastDeleteResponse {
+  id: Float
+  title: String
+  description: String
+  image: String
+  language: String
+  link: String
+  explicit: Boolean
+  authorId: Float
+}
+
+type PodcastEdge {
+  """The node containing the Podcast"""
+  node: Podcast!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+input PodcastFilter {
+  and: [PodcastFilter!]
+  or: [PodcastFilter!]
+  id: NumberFieldComparison
+  title: StringFieldComparison
+  explicit: BooleanFieldComparison
+  authorId: NumberFieldComparison
+}
+
+input PodcastSort {
+  field: PodcastSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum PodcastSortFields {
+  id
+  title
+  explicit
+  authorId
+}
+
+type Query {
+  author(id: ID!): Author
+  authors(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: AuthorFilter = {}
+
+    """Specify to sort results."""
+    sorting: [AuthorSort!] = []
+  ): AuthorConnection!
+  episode(id: ID!): Episode
+  episodes(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: EpisodeFilter = {}
+
+    """Specify to sort results."""
+    sorting: [EpisodeSort!] = []
+  ): EpisodeConnection!
+  podcast(id: ID!): Podcast
+  podcasts(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: PodcastFilter = {}
+
+    """Specify to sort results."""
+    sorting: [PodcastSort!] = []
+  ): PodcastConnection!
+  category(id: ID!): Category
+  categories(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: CategoryFilter = {}
+
+    """Specify to sort results."""
+    sorting: [CategorySort!] = []
+  ): CategoryConnection!
+  queue(id: ID!): Queue
+  queues(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: QueueFilter = {}
+
+    """Specify to sort results."""
+    sorting: [QueueSort!] = []
+  ): QueueConnection!
+}
+
+type Queue {
+  id: Float!
+  url: String!
+  completed: Boolean
+}
+
+type QueueConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [QueueEdge!]!
+}
+
+type QueueDeleteResponse {
+  id: Float
+  url: String
+  completed: Boolean
+}
+
+type QueueEdge {
+  """The node containing the Queue"""
+  node: Queue!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+input QueueFilter {
+  and: [QueueFilter!]
+  or: [QueueFilter!]
+  id: NumberFieldComparison
+  completed: BooleanFieldComparison
+}
+
+input QueueSort {
+  field: QueueSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum QueueSortFields {
+  id
+  completed
+}
+
+input RelationInput {
+  """The id of the record."""
+  id: ID!
+
+  """The id of relation."""
+  relationId: ID!
+}
+
+input RelationsInput {
+  """The id of the record."""
+  id: ID!
+
+  """The ids of the relations."""
+  relationIds: [ID!]!
+}
+
+"""Sort Directions"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+"""Sort Nulls Options"""
+enum SortNulls {
+  NULLS_FIRST
+  NULLS_LAST
+}
+
+input StringFieldComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: String
+  neq: String
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  like: String
+  notLike: String
+  iLike: String
+  notILike: String
+  in: [String!]
+  notIn: [String!]
+}
+
+input UpdateAuthor {
+  id: Float
+  name: String
+}
+
+input UpdateCategory {
+  id: Float
+  name: String
+}
+
+input UpdateEpisode {
+  id: Float
+  title: String
+  description: String
+  url: String
+  image: String
+  type: String
+  filesize: Float
+  explicit: Boolean
+  guid: String
+  duration: String
+  publication: DateTime
+  podcastId: Float
+}
+
+input UpdateManyAuthorsInput {
+  """Filter used to find fields to update"""
+  filter: AuthorFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateAuthor!
+}
+
+input UpdateManyCategoriesInput {
+  """Filter used to find fields to update"""
+  filter: CategoryFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateCategory!
+}
+
+input UpdateManyEpisodesInput {
+  """Filter used to find fields to update"""
+  filter: EpisodeFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateEpisode!
+}
+
+input UpdateManyPodcastsInput {
+  """Filter used to find fields to update"""
+  filter: PodcastFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdatePodcast!
+}
+
+type UpdateManyResponse {
+  """The number of records updated."""
+  updatedCount: Int!
+}
+
+input UpdateOneAuthorInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateAuthor!
+}
+
+input UpdateOneCategoryInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateCategory!
+}
+
+input UpdateOneEpisodeInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateEpisode!
+}
+
+input UpdateOnePodcastInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdatePodcast!
+}
+
+input UpdatePodcast {
+  id: Float
+  title: String
+  description: String
+  image: String
+  language: String
+  link: String
+  explicit: Boolean
+  authorId: Float
+}

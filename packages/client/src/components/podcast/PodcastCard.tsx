@@ -65,10 +65,7 @@ export function PodcastCard(props: PodcastProps) {
   const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
   const [visible, setVisible] = useState(true);
   const [expanded, setExpanded] = useState(false);
-  const [deletePodcast] = useMutation<
-    { deleteOnePodcast: DeleteResponse },
-    { input: DeleteOneInput }
-  >(DELETE_PODCAST);
+  const [deletePodcast] = useMutation<{ deleteOnePodcast: DeleteResponse }, { input: DeleteOneInput }>(DELETE_PODCAST);
   const classes = useStyles();
 
   const handleCardMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -109,17 +106,10 @@ export function PodcastCard(props: PodcastProps) {
               <CardContent>
                 <Grid container>
                   <Grid item xs={2}>
-                    <img
-                      src={podcast.image}
-                      height="150"
-                      width="150"
-                      alt="podcast logo"
-                    />
+                    <img src={podcast.image} height="150" width="150" alt="podcast logo" />
                   </Grid>
                   <Grid item xs={10}>
-                    <Typography variant="body2">
-                      {podcast.description}
-                    </Typography>
+                    <Typography variant="body2">{podcast.description}</Typography>
                   </Grid>
                 </Grid>
               </CardContent>

@@ -40,7 +40,7 @@ import { TypeOrmPinoLogger } from './TypeOrmPinoLogger';
       },
     }),
     ServeStaticModule.forRoot({
-      rootPath: path.resolve(__dirname, '..', '..', 'client'),
+      rootPath: path.resolve(__dirname, '..', '..', '..', 'client'),
       exclude: ['/graphql*'],
     }),
     GraphQLModule.forRoot({

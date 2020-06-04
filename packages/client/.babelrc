@@ -22,6 +22,9 @@
         "camel2DashComponentName": false
       },
       "icons"
-    ]
+    ],
+    ["@babel/plugin-transform-runtime", {
+      "regenerator": true
+    }]
   ]
 }

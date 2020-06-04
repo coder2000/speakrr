@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { Typography } from '@material-ui/core';
 import { PageInfo, Podcast } from '../../interfaces';
-import PodcastCard from './PodcastCard';
+import { PodcastCard } from './PodcastCard';
 
 interface PodcastEdge {
   node: Podcast;
@@ -61,9 +61,7 @@ export function PodcastList() {
       ) : (
         <>
           {data ? (
-            data.podcasts.edges.map((edge) => (
-              <PodcastCard podcast={edge.node} />
-            ))
+            data.podcasts.edges.map((edge) => <PodcastCard podcast={edge.node} key={`podcast-${edge.node.id}`} />)
           ) : (
             <>
               <Typography variant="h5">No Podcasts</Typography>

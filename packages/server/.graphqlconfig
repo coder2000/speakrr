@@ -1,6 +1,6 @@
 {
   "name": "Speakrr GraphQL Schema",
-  "schemaPath": "./schema.gql",
+  "schemaPath": "./schema.graphql",
   "extensions": {
     "endpoints": {
       "Default GraphQL Endpoint": {
