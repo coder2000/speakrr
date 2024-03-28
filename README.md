@@ -6,6 +6,8 @@
   </a>
 </p>
 
+**Archived** Project has not seen active development for years and is not currently in a production ready state
+
 > Speakrr is a podcast management system.
 
 ### 🏠 [Homepage](https://github.com/coder2000/speakrr#readme)
